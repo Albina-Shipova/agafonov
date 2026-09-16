@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Агафонов">
+  <rect width="96" height="96" rx="48" fill="#111111"/>
+  <path d="M20 70 43 22h10l23 48H63l-5-11H38l-5 11H20Zm22-22h12l-6-15-6 15Z" fill="#f1cd29"/>
+  <path d="M23 76h50" stroke="#f1cd29" stroke-width="4" stroke-linecap="round"/>
+</svg>

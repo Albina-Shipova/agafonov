@@ -1,0 +1,32 @@
+/* A single metallic wordmark, with the sheen contained inside the lettering. */
+.header .brand{min-width:232px;flex-shrink:0;display:block}
+.brand .wordmark,.footer__brand .wordmark{display:inline-flex;flex-direction:column;align-items:stretch;position:relative;padding-bottom:10px}
+.wordmark:after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,#9e691a,#ffeab0 38%,#bd8730 75%,transparent)}
+.brand .wordmark__title,.footer__brand .wordmark__title,.loader .wordmark__title{display:block;font:700 28px/1.25 Unbounded,Arial,sans-serif;letter-spacing:-.055em;transform:skewX(-6deg);color:#eed28b;background:linear-gradient(112deg,#a97125 0%,#ebc46d 17%,#fff2c9 29%,#c69239 43%,#f6d885 57%,#fffef4 64%,#f4d791 70%,#ac7728 84%,#eed28b 100%);background-size:260% 100%;background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:wordmark-sheen 7s ease-in-out infinite;filter:drop-shadow(0 1px 0 #6d481d55)}
+.brand .wordmark__tagline,.footer__brand .wordmark__tagline{display:block;margin-top:5px;color:#c5b99e;font:500 7px/1.5 Manrope,Arial,sans-serif;letter-spacing:.16em;text-transform:uppercase}
+.brand:focus-visible{outline:2px solid #f1cd29;outline-offset:8px}
+.brand:hover .wordmark__title{filter:drop-shadow(0 0 8px #edc66b55)}
+.loader .loader__brand{display:flex;flex-direction:column;gap:15px;align-items:center}
+.loader .wordmark__name{font:500 12px/1.5 Manrope,Arial,sans-serif;letter-spacing:.6em;color:#d9cba6;padding-left:.6em}
+.loader .wordmark__title{font-size:clamp(28px,6vw,68px)}
+@keyframes wordmark-sheen{0%,15%{background-position:100% 50%}70%,100%{background-position:0% 50%}}
+@media(max-width:1150px){.header .brand{min-width:205px}.brand .wordmark__title{font-size:25px}.brand .wordmark__tagline{font-size:6px}}
+@media(max-width:700px){.header .brand{min-width:0}.brand .wordmark{display:inline-flex}.brand .wordmark__title{font-size:26px}.brand .wordmark__tagline{font-size:6px;letter-spacing:.14em}.footer__brand .wordmark__title{font-size:25px}}
+@media(prefers-reduced-motion:reduce){.wordmark__title{animation:none!important;background-position:40% 50%!important}}
+.header{gap:24px;padding-left:clamp(20px,3vw,58px);padding-right:clamp(20px,3vw,58px)}
+.header__contact{display:flex;align-items:center;gap:18px;flex-shrink:0;margin-left:auto}
+.header .header__phone{display:block;text-align:right}.header .header__phone b{font:700 clamp(18px,1.5vw,26px)/1.3 Manrope,Arial,sans-serif;letter-spacing:-.03em;color:#fff}.header .header__phone small{font-size:9px;color:#c9c0af;margin-bottom:4px}
+.header__call{display:flex;align-items:center;justify-content:center;gap:9px;min-height:46px;padding:0 17px;background:linear-gradient(120deg,#e4b94b,#ffe7a0,#eac25b);border:1px solid #ffe09a;border-radius:6px;color:#17130a;font:800 11px Manrope,sans-serif;text-transform:uppercase;letter-spacing:.06em;animation:call-pulse 3s ease-out infinite}
+.header__call svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round}.header__call:hover{background:#fff0b7}.header__call:focus-visible{outline:2px solid white;outline-offset:4px}
+@keyframes call-pulse{0%,100%{box-shadow:0 0 0 0 #efd07900}35%{box-shadow:0 0 0 6px #efd07933}70%{box-shadow:0 0 0 11px #efd07900}}
+.principle-art{width:150px;height:150px;object-fit:contain;margin:14px 0 22px;transition:transform .3s}.principles article:hover .principle-art{transform:translateY(-4px) rotate(-2deg)}.principles h3{margin-top:20px}.principles article{padding-bottom:25px}
+.reviews{background:#e5ded1 url('assets/plaster.svg') repeat;color:#26231d;border-top:1px solid #d0c6b5;border-bottom:1px solid #d0c6b5}
+.reviews .section__label{color:#655d4f}.reviews .section__label span{background:#29261e;color:#ecd28e}.reviews__top>div b{color:#8c681e}.reviews__top .section__title i{color:#7e5f24;text-decoration:none}
+.reviews__demo-note{color:#625b50;font-size:12px;line-height:1.6;margin:30px 0 0;max-width:650px}
+.reviews__controls{margin-top:30px}.reviews__controls p{color:#393328}.reviews__controls button{background:#f7f3e9;border-color:#a89c87}.reviews__controls button:hover{background:#29261e;color:#ffe3a0}
+.reviews__track blockquote{flex-basis:calc((100% - 66px)/3.25);background:#fcfaf5;border:1px solid #d9cfbf;padding:28px;min-height:340px;box-shadow:0 5px 16px #34271209;border-radius:3px}
+.reviews__track blockquote:hover{background:#fffdf8}.reviews__track blockquote p{font-size:14px;line-height:1.8;color:#413a30}.reviews .review__stars{color:#9d751e;font-size:17px;letter-spacing:.12em}.reviews__track footer{border-top:1px solid #e5ded1;padding-top:19px;font-size:13px}.reviews__track footer small{display:block;font-size:10px;font-weight:400;color:#7b7162;margin-top:8px}.reviews__link{color:#413a30}
+@media(max-width:1350px){.header .nav{position:fixed;inset:76px 0 auto;background:#0b0b0b;display:grid;gap:0;padding:25px;max-height:calc(100svh - 76px);overflow:auto;transform:translateY(-130%);visibility:hidden;pointer-events:none}.header .nav.open{transform:none;visibility:visible;pointer-events:auto}.header .nav a{font-size:18px;border-bottom:1px solid #222}.header.is-scrolled .nav{top:72px}.header .menu-toggle{display:block;order:3;margin-left:4px;flex-shrink:0}.header__contact{margin-left:auto}.header .brand{min-width:210px}}
+@media(max-width:1000px){.reviews__track blockquote{flex-basis:calc((100% - 44px)/2.2)}}
+@media(max-width:700px){.header{gap:12px;padding:0 15px}.header .brand{min-width:0}.brand .wordmark__title{font-size:23px}.brand .wordmark__tagline{font-size:5px}.header .header__phone{display:none}.header__contact{gap:0}.header__call{min-height:42px;padding:0 10px;gap:6px;font-size:9px}.header__call svg{width:17px;height:17px}.header .menu-toggle{width:32px;margin-left:0}.principle-art{width:135px;height:135px}.reviews__track blockquote{flex-basis:86%;padding:24px;min-height:345px}}
+@media(prefers-reduced-motion:reduce){.header__call{animation:none}.principle-art{transition:none}}
