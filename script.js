@@ -32,7 +32,7 @@ const dockObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => entry.isIntersecting ? contactSections.add(entry.target) : contactSections.delete(entry.target));
   dock.classList.toggle('is-context-hidden', contactSections.size > 0);
 }, {threshold:0});
-document.querySelectorAll('#team, #contact, .footer').forEach(section => dockObserver.observe(section));
+document.querySelectorAll('#about, #team, #contact, .footer').forEach(section => dockObserver.observe(section));
 
 toggle.addEventListener('click', () => {
   const open = nav.classList.toggle('open');
