@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="brand.css?v=20260910">
   <link rel="stylesheet" href="portfolio-map.css?v=20260910">
   <link rel="stylesheet" href="hero-motion.css?v=20260910">
-  <link rel="stylesheet" href="design-v3.css?v=4">
+  <link rel="stylesheet" href="design-v3.css?v=5">
 </head>
 <body>
   <div class="scroll-progress" aria-hidden="true"><span></span></div>
@@ -50,7 +50,15 @@
         </div>
       </div>
       <a class="hero__scroll" href="#about"><span></span>листайте вниз</a>
-      <svg class="hero__wave" viewBox="0 0 1440 140" preserveAspectRatio="none" aria-hidden="true"><path d="M0 65 C240 100 480 30 720 50 S1200 85 1440 55 L1440 140 L0 140 Z"></path></svg>
+      <svg class="hero__wave" viewBox="0 0 1440 140" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <clipPath id="about-wave-clip"><path d="M0 65 C240 100 480 30 720 50 S1200 85 1440 55 L1440 140 L0 140 Z"/></clipPath>
+          <linearGradient id="about-wave-fade" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".16" stop-color="#fff" stop-opacity=".08"/><stop offset=".46" stop-color="#fff"/><stop offset="1" stop-color="#fff"/></linearGradient>
+          <mask id="about-wave-mask"><rect x="634" y="0" width="806" height="140" fill="url(#about-wave-fade)"/></mask>
+        </defs>
+        <path d="M0 65 C240 100 480 30 720 50 S1200 85 1440 55 L1440 140 L0 140 Z" fill="#f4f1eb"></path>
+        <g clip-path="url(#about-wave-clip)" mask="url(#about-wave-mask)"><image href="assets/about-background-v2.png" x="634" y="-382" width="806" height="470" preserveAspectRatio="xMidYMid slice"/></g>
+      </svg>
     </section>
 
     <section class="section intro" id="about">
