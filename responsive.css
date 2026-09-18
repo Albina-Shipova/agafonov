@@ -23,7 +23,6 @@
 .about-company__actions{flex-wrap:wrap}.about-company__facts{gap:0}.about-company__facts b{font-size:clamp(15px,1.6vw,20px)}
 .project-card__head{flex-wrap:wrap;gap:8px;padding:10px 0}.project-card h3{overflow-wrap:anywhere}
 .contact-dock{left:auto;right:18px;bottom:18px;transform:none}
-.footer{padding-bottom:110px}
 .reviews__viewport{overflow:hidden;padding-top:10px;margin-top:-10px}
 .reviews__track blockquote{flex-basis:calc((100% - 44px)/3);min-width:0}
 .reviews__controls button:disabled{opacity:.3;cursor:default;background:transparent;color:#111}

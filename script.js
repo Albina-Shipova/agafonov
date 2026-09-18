@@ -146,7 +146,16 @@ const galleryImages = [
   { src: 'assets/kitchen-12766-02.jpg', alt: 'Пеналы кухни со встроенной техникой' },
   { src: 'assets/kitchen-12766-03.jpg', alt: 'Общий вид установленной угловой кухни' },
   { src: 'assets/kitchen-12766-04.jpg', alt: 'Угловая кухня с серыми и белыми фасадами' },
-  { src: 'assets/kitchen-12766-05.jpg', alt: 'Фурнитура и выдвижные системы готовой кухни' }
+  { src: 'assets/kitchen-12766-05.jpg', alt: 'Фурнитура и выдвижные системы готовой кухни' },
+  { src: 'assets/vk-project-04-kitchen-render.jpg', alt: 'Дизайн-проект кухни с обеденной зоной' },
+  { src: 'assets/vk-project-01-loggia.jpg', alt: 'Дизайн-проект лоджии с зоной отдыха' },
+  { src: 'assets/vk-project-03-livingroom.jpg', alt: 'Дизайн-проект гостиной с диваном и стеллажом' },
+  { src: 'assets/vk-project-09-kitchen-beige.jpg', alt: 'Готовая бежевая кухня со встроенной техникой' },
+  { src: 'assets/vk-project-08-kitchen-grey.jpg', alt: 'Готовая серая кухня со встроенной техникой' },
+  { src: 'assets/vk-project-05-kitchen-wood.jpg', alt: 'Готовая кухня в дереве и белом цвете' },
+  { src: 'assets/vk-project-06-bathroom-tile.jpg', alt: 'Готовая ванная комната с подсветкой и плиткой под дерево' },
+  { src: 'assets/vk-project-07-bathroom-dark.jpg', alt: 'Тёмная ванная комната с чёрной сантехникой' },
+  { src: 'assets/vk-project-10-hallway.jpg', alt: 'Готовая прихожая со шкафом-купе' }
 ];
 const lightbox = document.querySelector('.lightbox');
 const lightboxImage = lightbox.querySelector('img');
