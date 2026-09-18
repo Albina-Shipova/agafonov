@@ -49,14 +49,31 @@ const dockObserver = new IntersectionObserver(entries => {
 }, {threshold:0.15});
 document.querySelectorAll('#team, #contact, .footer').forEach(section => dockObserver.observe(section));
 
+const closeMenu = () => {
+  nav.classList.remove('open');
+  toggle.setAttribute('aria-expanded', 'false');
+  toggle.setAttribute('aria-label', 'Открыть меню');
+  document.body.classList.remove('menu-open');
+};
+
 toggle.addEventListener('click', () => {
   const open = nav.classList.toggle('open');
   toggle.setAttribute('aria-expanded', String(open));
+  toggle.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+  document.body.classList.toggle('menu-open', open);
 });
 navLinks.forEach(link => link.addEventListener('click', () => {
-  nav.classList.remove('open');
-  toggle.setAttribute('aria-expanded', 'false');
+  closeMenu();
 }));
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && nav.classList.contains('open')) {
+    closeMenu();
+    toggle.focus();
+  }
+});
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 1350 && nav.classList.contains('open')) closeMenu();
+});
 
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -161,7 +178,12 @@ const lightbox = document.querySelector('.lightbox');
 const lightboxImage = lightbox.querySelector('img');
 const lightboxCounter = lightbox.querySelector('.lightbox__counter');
 let galleryIndex = 0;
-let galleryGroup = galleryImages.map((_, index) => index);
+const projectGalleryGroup = [...new Set(
+  [...document.querySelectorAll('.project-card [data-gallery]')]
+    .map(button => Number(button.dataset.gallery))
+    .filter(index => Number.isInteger(index) && galleryImages[index])
+)];
+let galleryGroup = projectGalleryGroup.length ? projectGalleryGroup : galleryImages.map((_, index) => index);
 let galleryTrigger = null;
 const renderLightbox = () => {
   const item = galleryImages[galleryIndex];
@@ -170,7 +192,8 @@ const renderLightbox = () => {
   lightboxCounter.textContent = `${String(galleryGroup.indexOf(galleryIndex) + 1).padStart(2, '0')} / ${String(galleryGroup.length).padStart(2, '0')}`;
 };
 const openLightbox = (index, card) => {
-  galleryGroup = card ? JSON.parse(card.dataset.galleryGroup) : galleryImages.map((_, i) => i);
+  galleryGroup = card && projectGalleryGroup.length ? projectGalleryGroup : galleryImages.map((_, i) => i);
+  if (!galleryGroup.includes(index)) galleryGroup = [index, ...galleryGroup];
   galleryTrigger = document.activeElement;
   galleryIndex = index;
   renderLightbox();
@@ -186,13 +209,12 @@ const closeLightbox = () => {
   galleryTrigger?.focus();
 };
 const stepLightbox = direction => {
-  galleryIndex = galleryGroup[(galleryGroup.indexOf(galleryIndex) + direction + galleryGroup.length) % galleryGroup.length];
+  if (!galleryGroup.length) return;
+  const currentPosition = Math.max(0, galleryGroup.indexOf(galleryIndex));
+  galleryIndex = galleryGroup[(currentPosition + direction + galleryGroup.length) % galleryGroup.length];
   renderLightbox();
 };
-document.querySelectorAll('.project-card').forEach(card => {
-  card.dataset.galleryGroup = JSON.stringify([...card.querySelectorAll('[data-gallery]')].map(button => Number(button.dataset.gallery)));
-});
-document.querySelectorAll('.project-card__main[data-gallery]').forEach(button => button.addEventListener('click', () => openLightbox(Number(button.dataset.gallery), button.closest('.project-card'))));
+document.querySelectorAll('.project-card__main[data-gallery], .project-card__arrow[data-gallery]').forEach(button => button.addEventListener('click', () => openLightbox(Number(button.dataset.gallery), button.closest('.project-card'))));
 lightbox.querySelector('.lightbox__close').addEventListener('click', closeLightbox);
 lightbox.querySelector('.lightbox__prev').addEventListener('click', () => stepLightbox(-1));
 lightbox.querySelector('.lightbox__next').addEventListener('click', () => stepLightbox(1));
@@ -205,79 +227,37 @@ document.addEventListener('keydown', event => {
 });
 
 const projectTrack = document.querySelector('.project-track');
+const projectPages = [...document.querySelectorAll('.project-page')];
 const projectCards = [...document.querySelectorAll('.project-card')];
 const projectCurrent = document.querySelector('.project-current');
 const projectPrev = document.querySelector('.project-prev');
 const projectNext = document.querySelector('.project-next');
+const PROJECT_PAGE_SIZE = 3;
 let projectIndex = 0;
 let projectTouchX = 0;
 let projectTouchY = 0;
-const projectsVisible = () => window.innerWidth <= 700 ? 1 : window.innerWidth <= 1050 ? 2 : 3;
 const updateProjects = () => {
-  const visible = projectsVisible();
-  const maxIndex = Math.max(0, projectCards.length - visible);
+  const maxIndex = projectPages.length - 1;
   projectIndex = Math.max(0, Math.min(projectIndex, maxIndex));
-  const gap = window.innerWidth <= 700 ? 14 : 22;
-  const width = projectCards[0]?.getBoundingClientRect().width || 0;
-  const maxScroll = Math.max(0, projectTrack.scrollWidth - projectTrack.parentElement.clientWidth);
-  const offset = Math.min(projectIndex * (width + gap), maxScroll);
-  projectTrack.style.transform = `translateX(${-offset}px)`;
-  const first = projectIndex + 1;
-  const last = Math.min(projectCards.length, projectIndex + visible);
-  projectCurrent.textContent = visible === 1 ? String(first).padStart(2, '0') : `${String(first).padStart(2, '0')}–${String(last).padStart(2, '0')}`;
+  projectTrack.style.transform = `translate3d(${-projectIndex * 100}%, 0, 0)`;
+  const first = projectIndex * PROJECT_PAGE_SIZE + 1;
+  const last = Math.min(projectCards.length, first + PROJECT_PAGE_SIZE - 1);
+  projectCurrent.textContent = `${String(first).padStart(2, '0')}–${String(last).padStart(2, '0')}`;
   projectPrev.disabled = projectIndex === 0;
   projectNext.disabled = projectIndex === maxIndex;
 };
-projectPrev.addEventListener('click', () => { projectIndex -= projectsVisible(); updateProjects(); });
-projectNext.addEventListener('click', () => { projectIndex += projectsVisible(); updateProjects(); });
+projectPrev.addEventListener('click', () => { projectIndex -= 1; updateProjects(); });
+projectNext.addEventListener('click', () => { projectIndex += 1; updateProjects(); });
+projectTrack.addEventListener('keydown', event => {
+  if (event.key === 'ArrowLeft') { event.preventDefault(); projectIndex -= 1; updateProjects(); }
+  if (event.key === 'ArrowRight') { event.preventDefault(); projectIndex += 1; updateProjects(); }
+});
 projectTrack.addEventListener('touchstart', event => { projectTouchX = event.touches[0].clientX; projectTouchY = event.touches[0].clientY; }, { passive: true });
 projectTrack.addEventListener('touchend', event => {
   const delta = event.changedTouches[0].clientX - projectTouchX;
   if (Math.abs(delta) < 45 || Math.abs(delta) < Math.abs(event.changedTouches[0].clientY - projectTouchY)) return;
-  projectIndex += delta < 0 ? projectsVisible() : -projectsVisible();
+  projectIndex += delta < 0 ? 1 : -1;
   updateProjects();
 }, { passive: true });
 window.addEventListener('resize', updateProjects);
 updateProjects();
-
-document.querySelectorAll('.project-card').forEach(card => {
-  const mainButton = card.querySelector('.project-card__main');
-  const mainImage = mainButton?.querySelector('img');
-  const thumbButtons = [...card.querySelectorAll('.project-card__thumbs button')];
-  if (!mainButton || !mainImage || !thumbButtons.length) return;
-
-  const slides = [mainButton, ...thumbButtons].map(button => ({
-    src: button.querySelector('img').getAttribute('src'),
-    alt: button.querySelector('img').getAttribute('alt'),
-    gallery: button.dataset.gallery
-  }));
-  let slideIndex = 0;
-  const media = document.createElement('div');
-  media.className = 'project-card__media';
-  mainButton.before(media);
-  media.append(mainButton);
-
-  const controls = document.createElement('div');
-  controls.className = 'project-card__slider';
-  controls.innerHTML = '<button type="button" aria-label="Предыдущее фото">←</button><button type="button" aria-label="Следующее фото">→</button>';
-  const counter = document.createElement('span');
-  counter.className = 'project-card__slider-count';
-  media.append(controls, counter);
-
-  const renderProjectSlide = () => {
-    const slide = slides[slideIndex];
-    mainImage.src = slide.src;
-    mainImage.alt = slide.alt;
-    mainButton.dataset.gallery = slide.gallery;
-    counter.textContent = `${slideIndex + 1} / ${slides.length}`;
-    thumbButtons.forEach((button, index) => button.classList.toggle('is-active', index + 1 === slideIndex));
-  };
-  const stepProjectSlide = direction => {
-    slideIndex = (slideIndex + direction + slides.length) % slides.length;
-    renderProjectSlide();
-  };
-  controls.children[0].addEventListener('click', event => { event.stopPropagation(); stepProjectSlide(-1); });
-  controls.children[1].addEventListener('click', event => { event.stopPropagation(); stepProjectSlide(1); });
-  thumbButtons.forEach((button, index) => button.addEventListener('click', () => { slideIndex = index + 1; renderProjectSlide(); }));
-  renderProjectSlide();
-});

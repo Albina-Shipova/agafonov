@@ -20,9 +20,9 @@
   .header.is-scrolled:before { background: rgba(8, 8, 8, .94); }
   .header .brand { gap: 17px; }
   .header .brand-mark { width: 58px; height: 58px; fill: #e5b889; }
-  .header .brand-mark-image { width: 62px; height: 62px; min-width: 62px; object-fit: contain; border-radius: 0; transform: scale(1.28); transform-origin: center; }
-  .brand .wordmark__title { font-size: 24px; font-weight: 500; letter-spacing: .14em; }
-  .brand .wordmark__tagline { margin-top: 6px; color: #e5c39d; font-size: 11px; font-weight: 500; letter-spacing: .1em; }
+  .header .brand-mark-image { width: 54px; height: 54px; min-width: 54px; object-fit: contain; border-radius: 0; transform: none; }
+  .brand .wordmark__title { font-size: 20px; font-weight: 500; letter-spacing: .14em; }
+  .brand .wordmark__tagline { margin-top: 5px; color: #e5c39d; font-size: 9px; font-weight: 500; letter-spacing: .1em; }
   .header .nav { justify-content: center; gap: clamp(18px, 2.3vw, 38px); }
   .header .nav a { padding: 11px 0; color: #d8d3cb; font-size: 15px; font-weight: 500; text-shadow: 0 1px 8px #000; }
   .header__contact { width: auto; display: flex; align-items: center; gap: 20px; }
@@ -57,7 +57,9 @@
   .eyebrow:before { width: 42px; height: 1px; background: #e0b38a; }
   .hero__title { max-width: 650px; margin: 22px 0 0; font-size: 62px; line-height: .96; letter-spacing: -.045em; }
   .hero__title em { color: #dfa878; }
-  .hero__lead { max-width: 520px; margin: 44px 0 0; color: #e0dbd5; font-size: clamp(14px,.9vw,18px); line-height: 1.48; }
+  .hero__lead { max-width: 650px; margin: 44px 0 0; color: #e0dbd5; font-size: clamp(14px,.9vw,18px); line-height: 1.48; }
+  .hero__lead span { display: block; }
+  .hero__lead span + span { margin-top: 10px; color: #f1e8df; }
   .hero__actions { margin-top: 48px; gap: 13px; }
   .hero .button { min-height: 42px; padding: 0 20px; font-size: 10px; font-weight: 600; letter-spacing: .055em; border-radius: 0; }
   .hero .button--yellow { background: #e5b88f; }
@@ -70,7 +72,7 @@
   .hero__scroll { left: max(var(--page-gap), calc((100vw - var(--container)) / 2)); bottom: 40px; flex-direction: row; gap: 17px; color: #eee6df; font-size: 11px; font-weight: 600; letter-spacing: .15em; text-shadow: 0 1px 7px #000; }
   .hero__scroll span { width: 1px; height: 36px; position: relative; flex: 0 0 1px; background: #f1dfcf; }
   .hero__scroll span:after { content: ""; position: absolute; left: -3px; bottom: 0; width: 7px; height: 7px; border-right: 1px solid #f1dfcf; border-bottom: 1px solid #f1dfcf; transform: rotate(45deg); transform-origin: center; }
-  .contact-dock { position: absolute; z-index: 5; bottom: 40px; padding: 4px; gap: 5px; border: 0; background: transparent; box-shadow: none; backdrop-filter: none; }
+  .contact-dock { position: fixed; z-index: 140; bottom: 40px; padding: 4px; gap: 5px; border: 0; background: transparent; box-shadow: none; backdrop-filter: none; }
   .contact-dock a { width: 40px; height: 40px; border: 1px solid #ffffff26; box-shadow: 0 5px 18px #0006; }
 
   .section:not(.intro) {
@@ -119,7 +121,7 @@
 .process__intro .section__label { margin: 0 0 28px; }
 .process__intro h2 {
   margin: 0;
-  font: 800 clamp(50px, 4.7vw, 76px)/.94 Manrope, Arial, sans-serif;
+  font: 800 clamp(36px, 4vw, 58px)/.94 Manrope, Arial, sans-serif;
   letter-spacing: -.06em;
 }
 .process__intro h2 em { color: #c69650; font-style: normal; }
@@ -210,7 +212,7 @@
 
 @media (max-width: 1100px) {
   .process__inner { grid-template-columns: 310px minmax(0, 1fr); gap: 50px; }
-  .process__intro h2 { font-size: 54px; }
+  .process__intro h2 { font-size: 44px; }
   .process .timeline { grid-template-columns: repeat(2, 1fr); gap: 34px 20px; }
   .process .timeline article:nth-child(2)::before { display: none; }
   .process .timeline article { padding-bottom: 10px; }
@@ -219,7 +221,7 @@
 @media (max-width: 760px) {
   .process { padding: 72px 20px; }
   .process__inner { display: block; }
-  .process__intro h2 { font-size: clamp(46px, 14.5vw, 64px); }
+  .process__intro h2 { font-size: clamp(36px, 11vw, 50px); }
   .process__intro > p { font-size: 16px; }
   .process__button { width: 100%; max-width: 340px; }
   .process__content { padding-top: 64px; }

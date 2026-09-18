@@ -7,9 +7,5 @@
 .hero .hero-key{position:relative;display:inline-block;font:inherit;vertical-align:baseline;white-space:nowrap}
 .hero-key__word{display:inline-block;font:inherit;opacity:1}
 .hero-key__icon{position:absolute;inset:0;width:100%;height:100%;overflow:visible;opacity:0;transform:translateY(7px) scale(.94);filter:drop-shadow(0 5px 4px #0009) drop-shadow(0 0 7px #e3b77c70) drop-shadow(0 0 16px #d8ac7033)}
-.hero--entered .hero-key__word{animation:hero-key-word 10s 4.5s infinite}
-.hero--entered .hero-key__icon{animation:hero-key-picture 10s 4.5s infinite}
 @keyframes hero-line-arrive{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
-@keyframes hero-key-word{0%,3%,30%,100%{opacity:1;transform:translateY(0)}7%,26%{opacity:0;transform:translateY(-8px)}}
-@keyframes hero-key-picture{0%,3%,30%,100%{opacity:0;transform:translateY(7px) scale(.94)}7%,26%{opacity:1;transform:translateY(0) scale(1)}}
 @media(prefers-reduced-motion:reduce){.hero.hero--motion-ready .hero__title>span,.hero.hero--entered .hero__title>span{opacity:1;transform:none;filter:none;animation:none}.hero .hero-key__word{opacity:1;transform:none;animation:none}.hero .hero-key__icon{opacity:0;animation:none}}
