@@ -49,20 +49,21 @@
     padding: clamp(110px, 13vh, 140px) 0 130px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 0;
   }
   .hero__content > .eyebrow { margin: 0; }
   .eyebrow { color: #eee4db; font-size: 13px; font-weight: 600; letter-spacing: .22em; text-shadow: 0 1px 8px #000; }
   .eyebrow:before { width: 42px; height: 1px; background: #e0b38a; }
-  .hero__title { max-width: 650px; margin: 0; font-size: 62px; line-height: .96; letter-spacing: -.045em; }
+  .hero__title { max-width: 650px; margin: 22px 0 0; font-size: 62px; line-height: .96; letter-spacing: -.045em; }
   .hero__title em { color: #dfa878; }
-  .hero__lead { max-width: 520px; margin: 0; color: #e0dbd5; font-size: 14px; line-height: 1.48; }
-  .hero__actions { margin-top: 0; gap: 13px; }
+  .hero__lead { max-width: 520px; margin: 44px 0 0; color: #e0dbd5; font-size: 14px; line-height: 1.48; }
+  .hero__actions { margin-top: 48px; gap: 13px; }
   .hero .button { min-height: 42px; padding: 0 20px; font-size: 10px; font-weight: 600; letter-spacing: .055em; border-radius: 0; }
   .hero .button--yellow { background: #e5b88f; }
   .hero .button--yellow b { font-size: 16px; font-weight: 400; }
   .hero .button--ghost { border-color: #d8d0c8; }
-  .hero__stats { position: static; margin-top: 0; gap: 38px; }
+  .hero__stats { position: static; margin-top: 56px; gap: 38px; }
   .hero__stats div { min-width: 92px; padding-left: 17px; align-items: flex-start; gap: 7px; }
   .hero__stats strong { font-size: 30px; line-height: .9; color: #f1d5be; }
   .hero__stats span { font-size: 11px; line-height: 1.45; font-weight: 600; letter-spacing: .075em; color: #eee6df; text-shadow: 0 1px 7px #000; }
@@ -125,3 +126,6 @@
   .header__contact { grid-column: 2; }
   .header .menu-toggle { display:grid; grid-column: 3; }
 }
+
+/* Круг «ДОГОВОР · ГАРАНТИЯ · ПОЛНЫЙ ЦИКЛ» убран из первого экрана: он не отображался, но занимал место в колонке. */
+.hero__orbit { display: none; }

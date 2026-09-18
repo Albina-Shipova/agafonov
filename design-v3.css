@@ -67,9 +67,9 @@ button,a{-webkit-tap-highlight-color:transparent}button{font:inherit}button:focu
 /* Exact desktop geometry calibrated against the supplied 1920 px reference. */
 @media(min-width:1051px){
  .company{margin-top:80px}
- .intro{display:block;width:min(var(--max),calc(100% - 44px));max-width:var(--max);height:720px;min-height:720px;margin-left:auto;margin-right:auto;overflow:visible}
+ .intro{display:block;width:min(var(--max),calc(100% - 44px));max-width:var(--max);height:830px;min-height:830px;margin-left:auto;margin-right:auto;overflow:visible}
  .intro>.section__label{position:absolute;top:112px;width:auto;height:auto;padding:0;z-index:5}
- .intro__grid{position:absolute;inset:0;display:block;width:100%;height:720px;padding:0}
+ .intro__grid{position:absolute;inset:0;display:block;width:100%;height:830px;padding:0}
  .intro__statement{position:absolute;inset:0;width:100%;height:490px;padding:0;display:block}
  .intro .section__title{position:absolute;top:165px;width:47%;max-width:none;margin:0;font-size:clamp(48px,3.45vw,66px);line-height:.94;letter-spacing:-.04em}
  .intro .section__title i{font-weight:800}
@@ -78,11 +78,15 @@ button,a{-webkit-tap-highlight-color:transparent}button{font:inherit}button:focu
  .intro__copy .lead{margin:0;font-size:17px;line-height:1.35}
  .intro__copy p{margin:18px 0 0;font-size:14px;line-height:1.45}
  .intro__more{width:100%;height:48px;min-height:48px;margin-top:20px;padding:0 18px}
- .intro__visual{left:calc((var(--max) - 100vw)/2);right:calc((var(--max) - 100vw)/2);top:0;bottom:auto;width:auto;height:720px}
- .intro__visual:before{display:none}
+ .intro__visual{left:50%;right:auto;margin-left:-50vw;top:0;bottom:auto;width:100vw;height:720px}
+ /* Нижняя треть фото уходит в расфокус — прячет горизонтальную кромку на снимке,
+    которая при cover гуляет по высоте в зависимости от ширины окна. */
+ .intro__visual:before{content:"";display:block;position:absolute;z-index:1;inset:auto 0 0 0;width:auto;height:360px;background:none;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.8) 30%,#000 55%);mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.8) 30%,#000 55%);pointer-events:none}
+ /* Нижняя кромка фото плавно уходит в цвет фона секции. */
+ .intro__visual:after{content:"";position:absolute;z-index:2;left:0;right:0;bottom:0;height:240px;background:linear-gradient(180deg,rgba(244,241,235,0) 0%,rgba(244,241,235,.55) 50%,#f4f1eb 100%);pointer-events:none}
  .intro__visual figcaption{top:72px;right:4.5vw}
  .intro .principles{position:absolute;left:0;right:0;top:541px;width:81%;height:230px;min-height:0;grid-template-columns:repeat(4,minmax(0,1fr));border-top:0;background:rgb(246 243 237 / 0%);-webkit-backdrop-filter:none;backdrop-filter:none}
- .intro .principles article,.intro .principles article+article{--card-left:0;height:230px;min-height:0;padding:0 48px 0 0;border-right:1px solid var(--line);box-sizing:border-box}
+ .intro .principles article,.intro .principles article+article{--card-left:0;height:230px;min-height:0;padding:0 48px 0 0;border-right:0;box-sizing:border-box}
  .intro .principles article+article{padding-left:48px}
  .intro .principles article:first-child{--card-left:0;padding-left:0}
  .intro .principles article:last-child{border-right:0}
@@ -90,4 +94,43 @@ button,a{-webkit-tap-highlight-color:transparent}button{font:inherit}button:focu
  .intro .principles article>b{display:none}
  .intro .principles h3{position:absolute;left:unset;top:96px;width:calc(100% - 28px);margin:0;font-size:18px;line-height:1.25}
  .intro .principles p{position:absolute;left:unset;top:132px;width:calc(100% - 28px);max-width:285px;margin:0;font-size:12px;line-height:1.55}
+}
+
+/* === Услуги: одна панорамная композиция — вводная зона + четыре сегмента === */
+.services{position:relative;isolation:isolate;padding-top:52px;padding-bottom:52px}
+.services:before{content:"";position:absolute;z-index:-1;top:0;left:50%;width:100vw;height:100%;transform:translateX(-50%);background:radial-gradient(circle at 25% 20%,rgba(255,255,255,.55),transparent 38%),linear-gradient(135deg,#F6F3EE 0%,#F1EEE8 100%);pointer-events:none}
+.services .section__label{margin-bottom:22px}
+.services__panorama{display:grid;grid-template-columns:28% repeat(4,minmax(0,1fr));gap:0;height:440px}
+.services__intro{display:flex;flex-direction:column;padding-right:42px}
+.services__title{margin:0;font:800 clamp(33px,2.75vw,45px)/1.16 Manrope,Arial,sans-serif;letter-spacing:-.035em;color:#17150f}
+.services__title i{font-style:normal;color:#c19359}
+.services__intro p{margin:22px 0 0;max-width:370px;font-size:14px;line-height:1.62;color:#69655d}
+.services__all{margin-top:36px;align-self:flex-start;padding-bottom:6px;border-bottom:1px solid #bdb4a5;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#2a2722;transition:color .25s,border-color .25s}
+.services__all:hover{color:#a9773f;border-color:#a9773f}
+.service-seg{position:relative;display:block;overflow:hidden;color:#fff}
+.service-seg__media{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .8s cubic-bezier(.2,.6,.2,1)}
+.service-seg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,12,11,.16) 0%,rgba(12,12,11,.5) 52%,rgba(9,9,8,.84) 100%);transition:opacity .45s}
+.service-seg__num{position:absolute;z-index:2;top:26px;left:26px;font-size:11px;font-weight:600;letter-spacing:.16em;color:#e9dbc8}
+.service-seg__name{position:absolute;z-index:2;left:26px;right:20px;bottom:28px;font:800 clamp(19px,1.5vw,25px)/1.16 Manrope,Arial,sans-serif;letter-spacing:-.03em;text-shadow:0 2px 14px rgba(0,0,0,.45)}
+.service-seg:hover .service-seg__media{transform:scale(1.045)}
+.service-seg:hover:after{opacity:.82}
+.services__panorama .reveal:nth-child(2){transition-delay:.06s}
+.services__panorama .reveal:nth-child(3){transition-delay:.12s}
+.services__panorama .reveal:nth-child(4){transition-delay:.18s}
+.services__panorama .reveal:nth-child(5){transition-delay:.24s}
+@media(prefers-reduced-motion:reduce){.service-seg:hover .service-seg__media{transform:none}}
+@media(max-width:1050px){
+ .services{padding-top:44px;padding-bottom:44px}
+ .services__panorama{grid-template-columns:repeat(2,minmax(0,1fr));height:auto}
+ .services__intro{grid-column:1/-1;padding:0 0 28px}
+ .services__all{margin-top:24px}
+ .services__intro p{max-width:520px}
+ .service-seg{height:250px}
+}
+@media(max-width:700px){
+ .services__panorama{grid-template-columns:1fr}
+ .service-seg{height:200px}
+ .service-seg__name{font-size:22px}
+ .service-seg__num{top:20px;left:20px}
+ .service-seg__name{left:20px;bottom:22px}
 }
