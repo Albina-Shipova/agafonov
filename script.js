@@ -43,9 +43,30 @@ onScroll();
 // These sections provide their own contact actions; keep them unobstructed.
 const dock = document.querySelector('.contact-dock');
 const contactSections = new Set();
+const dockToggle = dock?.querySelector('.contact-dock__toggle');
+const setDockOpen = open => {
+  if (!dock || !dockToggle) return;
+  dock.classList.toggle('is-open', open);
+  dockToggle.setAttribute('aria-expanded', String(open));
+  dockToggle.setAttribute('aria-label', open ? 'Закрыть способы связи' : 'Открыть способы связи');
+};
+if (dockToggle) {
+  dockToggle.addEventListener('click', () => setDockOpen(!dock.classList.contains('is-open')));
+  dock.querySelectorAll('.contact-dock__methods a').forEach(link => link.addEventListener('click', () => setDockOpen(false)));
+  document.addEventListener('click', event => {
+    if (!dock.contains(event.target)) setDockOpen(false);
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && dock.classList.contains('is-open')) {
+      setDockOpen(false);
+      dockToggle.focus();
+    }
+  });
+}
 const dockObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => entry.isIntersecting ? contactSections.add(entry.target) : contactSections.delete(entry.target));
   dock.classList.toggle('is-context-hidden', contactSections.size > 0);
+  if (contactSections.size > 0) setDockOpen(false);
 }, {threshold:0.15});
 document.querySelectorAll('#team, #contact, .footer').forEach(section => dockObserver.observe(section));
 

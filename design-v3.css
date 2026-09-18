@@ -188,8 +188,10 @@ button,a{-webkit-tap-highlight-color:transparent}button{font:inherit}button:focu
 .contact__social{width:60px;height:60px}
 .contact__social svg{width:26px;height:26px}
 .contact__social span{bottom:-26px;color:#68645b}
-.contact__social.contact__social--vk,.contact__social.contact__social--telegram{background:var(--ink);color:var(--paper)}
-.contact__social.contact__social--vk:hover,.contact__social.contact__social--vk:focus-visible,.contact__social.contact__social--telegram:hover,.contact__social.contact__social--telegram:focus-visible{background:var(--yellow);color:var(--ink)}
+.contact__social.contact__social--vk{background:#0077ff;color:#fff}
+.contact__social.contact__social--telegram{background:#2aabee;color:#fff}
+.contact__social.contact__social--vk:hover,.contact__social.contact__social--vk:focus-visible{background:#0068e0;color:#fff}
+.contact__social.contact__social--telegram:hover,.contact__social.contact__social--telegram:focus-visible{background:#229ed9;color:#fff}
 .contact__details{margin-top:52px;display:flex;gap:56px;max-width:none}
 .contact__details>div{grid-template-columns:none!important;text-align:center}
 .contact__details small{padding-top:0!important;display:block;margin-bottom:6px}
