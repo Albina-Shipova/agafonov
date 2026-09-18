@@ -5,11 +5,26 @@ const toggle = document.querySelector('.menu-toggle');
 const progress = document.querySelector('.scroll-progress span');
 const sections = [...document.querySelectorAll('main section[id], #advantages')];
 const navLinks = [...document.querySelectorAll('.nav a')];
+const hero = document.querySelector('.hero');
+const finalHeroTitleLine = document.querySelector('.hero__title > span:last-child');
+finalHeroTitleLine?.addEventListener('animationend', event => {
+  if (event.animationName === 'hero-line-arrive') hero?.classList.add('hero--title-settled');
+});
+const announceSiteReady = () => {
+  hero?.classList.add('hero--entered');
+  document.documentElement.classList.add('site-ready');
+  requestAnimationFrame(() => window.dispatchEvent(new Event('site:ready')));
+};
 
 window.addEventListener('load', () => {
+  const loader = document.querySelector('.loader');
+  if (!loader) {
+    announceSiteReady();
+    return;
+  }
   window.setTimeout(() => {
-    document.querySelector('.loader')?.classList.add('is-done');
-    window.setTimeout(() => { document.querySelector('.hero')?.classList.add('hero--entered'); window.dispatchEvent(new Event('site:ready')); }, 750);
+    loader.classList.add('is-done');
+    window.setTimeout(announceSiteReady, 750);
   }, 1650);
 });
 
@@ -31,8 +46,8 @@ const contactSections = new Set();
 const dockObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => entry.isIntersecting ? contactSections.add(entry.target) : contactSections.delete(entry.target));
   dock.classList.toggle('is-context-hidden', contactSections.size > 0);
-}, {threshold:0});
-document.querySelectorAll('#about, #team, #contact, .footer').forEach(section => dockObserver.observe(section));
+}, {threshold:0.15});
+document.querySelectorAll('#team, #contact, .footer').forEach(section => dockObserver.observe(section));
 
 toggle.addEventListener('click', () => {
   const open = nav.classList.toggle('open');

@@ -13,11 +13,14 @@
     next.classList.remove('is-leaving');
     next.classList.add('is-active');
   };
-  window.addEventListener('site:ready', () => {
+  const startHeroSlides = () => {
+    if (ready) return;
     ready = true;
     slides[0]?.classList.add('is-active');
     if (!reduced) slideTimer = setInterval(advance, 11000);
-  }, {once:true});
+  };
+  window.addEventListener('site:ready', startHeroSlides, {once:true});
+  if (document.documentElement.classList.contains('site-ready')) startHeroSlides();
   document.addEventListener('visibilitychange', () => {
     clearInterval(slideTimer);
     if (!document.hidden && ready && !reduced) slideTimer = setInterval(advance, 11000);
