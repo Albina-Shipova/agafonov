@@ -95,7 +95,10 @@ let touchStartX = 0;
 let touchStartY = 0;
 const reviewPrev = document.querySelector('.review-prev');
 const reviewNext = document.querySelector('.review-next');
+const reviewProgress = document.querySelector('.reviews__progress i');
+const reviewCount = document.querySelector('.reviews__count');
 const reviewsVisible = () => window.innerWidth <= 700 ? 1 : window.innerWidth <= 1000 ? 2 : 3;
+const pad2 = n => String(n).padStart(2, '0');
 const updateReviews = () => {
   const cardWidth = reviewCards[0]?.getBoundingClientRect().width || 0;
   const maxIndex = Math.max(0, reviewCards.length - reviewsVisible());
@@ -105,6 +108,8 @@ const updateReviews = () => {
   reviewTrack.style.transform = `translateX(${-offset}px)`;
   reviewPrev.disabled = reviewIndex === 0;
   reviewNext.disabled = reviewIndex === maxIndex;
+  if (reviewProgress) reviewProgress.style.width = `${maxIndex === 0 ? 100 : (reviewIndex / maxIndex) * 100}%`;
+  if (reviewCount) reviewCount.textContent = `${pad2(reviewIndex + 1)} / ${pad2(reviewCards.length)}`;
 };
 document.querySelector('.review-prev').addEventListener('click', () => { reviewIndex -= 1; updateReviews(); });
 document.querySelector('.review-next').addEventListener('click', () => { reviewIndex += 1; updateReviews(); });
@@ -198,14 +203,16 @@ const projectNext = document.querySelector('.project-next');
 let projectIndex = 0;
 let projectTouchX = 0;
 let projectTouchY = 0;
-const projectsVisible = () => window.innerWidth <= 700 ? 1 : 2;
+const projectsVisible = () => window.innerWidth <= 700 ? 1 : window.innerWidth <= 1050 ? 2 : 3;
 const updateProjects = () => {
   const visible = projectsVisible();
   const maxIndex = Math.max(0, projectCards.length - visible);
   projectIndex = Math.max(0, Math.min(projectIndex, maxIndex));
   const gap = window.innerWidth <= 700 ? 14 : 22;
   const width = projectCards[0]?.getBoundingClientRect().width || 0;
-  projectTrack.style.transform = `translateX(${-projectIndex * (width + gap)}px)`;
+  const maxScroll = Math.max(0, projectTrack.scrollWidth - projectTrack.parentElement.clientWidth);
+  const offset = Math.min(projectIndex * (width + gap), maxScroll);
+  projectTrack.style.transform = `translateX(${-offset}px)`;
   const first = projectIndex + 1;
   const last = Math.min(projectCards.length, projectIndex + visible);
   projectCurrent.textContent = visible === 1 ? String(first).padStart(2, '0') : `${String(first).padStart(2, '0')}–${String(last).padStart(2, '0')}`;
