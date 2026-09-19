@@ -122,6 +122,10 @@ button,a{-webkit-tap-highlight-color:transparent}button{font:inherit}button:focu
 .services__panorama .reveal:nth-child(4){transition-delay:.18s}
 .services__panorama .reveal:nth-child(5){transition-delay:.24s}
 @media(prefers-reduced-motion:reduce){.service-seg:hover .service-seg__media{transform:none}}
+
+.hero__slide[data-bg]{background-image:none!important}
+.service-seg__media{background-color:#d8d1c6;opacity:0;transition:transform .8s cubic-bezier(.2,.6,.2,1),opacity .45s ease}
+.service-seg__media.is-loaded{opacity:1}
 @media(max-width:1050px){
  .services{padding-top:44px;padding-bottom:44px}
  .services__panorama{grid-template-columns:repeat(2,minmax(0,1fr));height:auto}

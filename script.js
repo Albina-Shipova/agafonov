@@ -96,14 +96,42 @@ window.addEventListener('resize', () => {
   if (window.innerWidth > 1350 && nav.classList.contains('open')) closeMenu();
 });
 
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Native lazy loading covers <img>; backgrounds need an explicit observer.
+const loadBackground = element => {
+  const source = element.dataset.bg;
+  if (!source) return;
+  const image = new Image();
+  image.decoding = 'async';
+  image.onload = () => {
+    element.style.backgroundImage = `url("${source}")`;
+    element.classList.add('is-loaded');
+    delete element.dataset.bg;
+  };
+  image.src = source;
+};
+const backgroundObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    loadBackground(entry.target);
+    backgroundObserver.unobserve(entry.target);
+  });
+}, { rootMargin: '450px 0px' });
+document.querySelectorAll('[data-bg]:not(.hero__slide)').forEach(element => backgroundObserver.observe(element));
+
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
     entry.target.classList.add('visible');
     revealObserver.unobserve(entry.target);
   });
-}, { threshold: .12 });
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+}, { threshold: .12, rootMargin: '0px 0px -5% 0px' });
+document.querySelectorAll('.reveal').forEach((el, index) => {
+  el.style.setProperty('--reveal-order', index % 4);
+  if (reducedMotion) el.classList.add('visible');
+  else revealObserver.observe(el);
+});
 
 const countObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -166,34 +194,34 @@ window.addEventListener('resize', updateReviews);
 updateReviews();
 
 const galleryImages = [
-  { src: 'assets/denis-01.jpg', alt: 'Отделка ванной комнаты — проект Дениса Агафонова' },
-  { src: 'assets/denis-02.jpg', alt: 'Деталь отделки ванной комнаты' },
-  { src: 'assets/denis-03.jpg', alt: 'Фрагмент ремонта ванной комнаты' },
-  { src: 'assets/denis-13.jpg', alt: 'Предчистовая отделка квартиры площадью 64,8 квадратного метра' },
-  { src: 'assets/denis-14.jpg', alt: 'Подготовленные стены квартиры' },
-  { src: 'assets/denis-15.jpg', alt: 'Инженерные работы в квартире' },
-  { src: 'assets/denis-18.jpg', alt: 'Процесс комплексного ремонта квартиры' },
-  { src: 'assets/denis-19.jpg', alt: 'Чистовая отделка квартиры' },
-  { src: 'assets/denis-20.jpg', alt: 'Деталь завершённого ремонта' },
-  { src: 'assets/denis-27.jpg', alt: 'Чистовая отделка комнаты с напольным покрытием' },
-  { src: 'assets/denis-28.jpg', alt: 'Укладка напольного покрытия' },
-  { src: 'assets/denis-29.jpg', alt: 'Готовая светлая комната после отделки' },
-  { src: 'assets/vk-kitchen-01.jpg', alt: 'Готовая кухня с корпусной мебелью и встроенной техникой' },
-  { src: 'assets/vk-bathroom-clean.png', alt: 'Светлая ванная комната с мраморной плиткой и деревянными рейками' },
-  { src: 'assets/kitchen-12766-01.jpg', alt: 'Установленная кухня — рабочая зона с мойкой и варочной панелью' },
-  { src: 'assets/kitchen-12766-02.jpg', alt: 'Пеналы кухни со встроенной техникой' },
-  { src: 'assets/kitchen-12766-03.jpg', alt: 'Общий вид установленной угловой кухни' },
-  { src: 'assets/kitchen-12766-04.jpg', alt: 'Угловая кухня с серыми и белыми фасадами' },
-  { src: 'assets/kitchen-12766-05.jpg', alt: 'Фурнитура и выдвижные системы готовой кухни' },
-  { src: 'assets/vk-project-04-kitchen-render.jpg', alt: 'Дизайн-проект кухни с обеденной зоной' },
-  { src: 'assets/vk-project-01-loggia.jpg', alt: 'Дизайн-проект лоджии с зоной отдыха' },
-  { src: 'assets/vk-project-03-livingroom.jpg', alt: 'Дизайн-проект гостиной с диваном и стеллажом' },
-  { src: 'assets/vk-project-09-kitchen-beige.jpg', alt: 'Готовая бежевая кухня со встроенной техникой' },
-  { src: 'assets/vk-project-08-kitchen-grey.jpg', alt: 'Готовая серая кухня со встроенной техникой' },
-  { src: 'assets/vk-project-05-kitchen-wood.jpg', alt: 'Готовая кухня в дереве и белом цвете' },
-  { src: 'assets/vk-project-06-bathroom-tile.jpg', alt: 'Готовая ванная комната с подсветкой и плиткой под дерево' },
-  { src: 'assets/vk-project-07-bathroom-dark.jpg', alt: 'Тёмная ванная комната с чёрной сантехникой' },
-  { src: 'assets/vk-project-10-hallway.jpg', alt: 'Готовая прихожая со шкафом-купе' }
+  { src: 'assets/denis-01.webp', alt: 'Отделка ванной комнаты — проект Дениса Агафонова' },
+  { src: 'assets/denis-02.webp', alt: 'Деталь отделки ванной комнаты' },
+  { src: 'assets/denis-03.webp', alt: 'Фрагмент ремонта ванной комнаты' },
+  { src: 'assets/denis-13.webp', alt: 'Предчистовая отделка квартиры площадью 64,8 квадратного метра' },
+  { src: 'assets/denis-14.webp', alt: 'Подготовленные стены квартиры' },
+  { src: 'assets/denis-15.webp', alt: 'Инженерные работы в квартире' },
+  { src: 'assets/denis-18.webp', alt: 'Процесс комплексного ремонта квартиры' },
+  { src: 'assets/denis-19.webp', alt: 'Чистовая отделка квартиры' },
+  { src: 'assets/denis-20.webp', alt: 'Деталь завершённого ремонта' },
+  { src: 'assets/denis-27.webp', alt: 'Чистовая отделка комнаты с напольным покрытием' },
+  { src: 'assets/denis-28.webp', alt: 'Укладка напольного покрытия' },
+  { src: 'assets/denis-29.webp', alt: 'Готовая светлая комната после отделки' },
+  { src: 'assets/vk-kitchen-01.webp', alt: 'Готовая кухня с корпусной мебелью и встроенной техникой' },
+  { src: 'assets/vk-bathroom-clean.webp', alt: 'Светлая ванная комната с мраморной плиткой и деревянными рейками' },
+  { src: 'assets/kitchen-12766-01.webp', alt: 'Установленная кухня — рабочая зона с мойкой и варочной панелью' },
+  { src: 'assets/kitchen-12766-02.webp', alt: 'Пеналы кухни со встроенной техникой' },
+  { src: 'assets/kitchen-12766-03.webp', alt: 'Общий вид установленной угловой кухни' },
+  { src: 'assets/kitchen-12766-04.webp', alt: 'Угловая кухня с серыми и белыми фасадами' },
+  { src: 'assets/kitchen-12766-05.webp', alt: 'Фурнитура и выдвижные системы готовой кухни' },
+  { src: 'assets/vk-project-04-kitchen-render.webp', alt: 'Дизайн-проект кухни с обеденной зоной' },
+  { src: 'assets/vk-project-01-loggia.webp', alt: 'Дизайн-проект лоджии с зоной отдыха' },
+  { src: 'assets/vk-project-03-livingroom.webp', alt: 'Дизайн-проект гостиной с диваном и стеллажом' },
+  { src: 'assets/vk-project-09-kitchen-beige.webp', alt: 'Готовая бежевая кухня со встроенной техникой' },
+  { src: 'assets/vk-project-08-kitchen-grey.webp', alt: 'Готовая серая кухня со встроенной техникой' },
+  { src: 'assets/vk-project-05-kitchen-wood.webp', alt: 'Готовая кухня в дереве и белом цвете' },
+  { src: 'assets/vk-project-06-bathroom-tile.webp', alt: 'Готовая ванная комната с подсветкой и плиткой под дерево' },
+  { src: 'assets/vk-project-07-bathroom-dark.webp', alt: 'Тёмная ванная комната с чёрной сантехникой' },
+  { src: 'assets/vk-project-10-hallway.webp', alt: 'Готовая прихожая со шкафом-купе' }
 ];
 const lightbox = document.querySelector('.lightbox');
 const lightboxImage = lightbox.querySelector('img');

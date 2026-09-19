@@ -17,6 +17,20 @@
     if (ready) return;
     ready = true;
     slides[0]?.classList.add('is-active');
+    // Load later frames only after the first screen has settled.
+    slides.slice(1).forEach((slide, index) => {
+      window.setTimeout(() => {
+        if (!slide.dataset.bg) return;
+        const image = new Image();
+        image.decoding = 'async';
+        image.onload = () => {
+          slide.style.backgroundImage = `url("${slide.dataset.bg}")`;
+          slide.classList.add('is-loaded');
+          delete slide.dataset.bg;
+        };
+        image.src = slide.dataset.bg;
+      }, 700 + index * 350);
+    });
     if (!reduced) slideTimer = setInterval(advance, 11000);
   };
   window.addEventListener('site:ready', startHeroSlides, {once:true});
@@ -42,7 +56,7 @@
     previous.disabled = active === 0;
     next.disabled = active === cards.length - 1;
   };
-  const step = direction => track.scrollTo({left:Math.max(0, Math.min(cards.length-1,index()+direction)) * (cards[0].getBoundingClientRect().width+16),behavior:reduced?'instant':'smooth'});
+  const step = direction => track.scrollTo({left:Math.max(0, Math.min(cards.length-1,index()+direction)) * (cards[0].getBoundingClientRect().width+16),behavior:reduced?'auto':'smooth'});
   previous.addEventListener('click',()=>step(-1));
   next.addEventListener('click',()=>step(1));
   track.addEventListener('scroll',update,{passive:true});

@@ -10,23 +10,24 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png?v=20260919" sizes="180x180">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="assets/hero0.webp" as="image" type="image/webp" fetchpriority="high">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260919-mobile-dock">
+  <link rel="stylesheet" href="styles.css?v=20260919-motion-webp">
   <link rel="stylesheet" href="responsive.css?v=20260918-footer3">
   <link rel="stylesheet" href="brand.css?v=20260910">
   <link rel="stylesheet" href="portfolio-map.css?v=20260910">
   <link rel="stylesheet" href="hero-motion.css?v=20260918-crisp">
-<link rel="stylesheet" href="design-v3.css?v=46">
+<link rel="stylesheet" href="design-v3.css?v=47-webp">
   <link rel="stylesheet" href="hero-reference.css?v=24">
   <link rel="stylesheet" href="mobile.css?v=20260919-mobile-dock">
   <link rel="stylesheet" href="accent.css?v=20260918-warm">
 </head>
 <body>
   <div class="scroll-progress" aria-hidden="true"><span></span></div>
-  <div class="loader" aria-hidden="true"><div class="loader__brand"><img class="brand-mark loader-logo" src="assets/agafonov-logo-transparent.png" alt=""><span class="wordmark__name">ДЕНИС</span><span class="wordmark__title">АГАФОНОВ</span></div><div class="loader__caption">ремонт · дизайн · строительство</div><div class="loader__line"><span></span></div></div>
+  <div class="loader" aria-hidden="true"><div class="loader__brand"><img decoding="async" width="320" height="320" class="brand-mark loader-logo" src="assets/agafonov-logo-transparent.webp" alt=""><span class="wordmark__name">ДЕНИС</span><span class="wordmark__title">АГАФОНОВ</span></div><div class="loader__caption">ремонт · дизайн · строительство</div><div class="loader__line"><span></span></div></div>
 
   <header class="header" id="header">
-    <a class="brand" href="#top" aria-label="Денис Агафонов — на главную"><img class="brand-mark-image" src="assets/agafonov-logo-transparent.png" alt="" aria-hidden="true">
+    <a class="brand" href="#top" aria-label="Денис Агафонов — на главную"><img decoding="async" width="320" height="320" class="brand-mark-image" src="assets/agafonov-logo-transparent.webp" alt="" aria-hidden="true">
       <span class="wordmark"><b class="wordmark__title">АГАФОНОВ</b><small class="wordmark__tagline">ремонт · дизайн · строительство</small></span>
     </a>
     <nav class="nav" aria-label="Основная навигация"><a href="#about">О компании</a><a href="#services">Услуги</a><a href="#projects">Проекты</a><a href="#process">Процесс</a><a href="#reviews">Отзывы</a><a href="#contact">Контакты</a></nav>
@@ -36,7 +37,7 @@
 
   <main id="top">
     <section class="hero">
-      <div class="hero__slides" aria-hidden="true"><div class="hero__slide" style="background-image:url(assets/hero0.png)"></div><div class="hero__slide" style="background-image:url(assets/hero-agafonov-v2.png)"></div><div class="hero__slide" style="background-image:url(assets/hero-bathroom-hq.png)"></div><div class="hero__slide" style="background-image:url(assets/hero-kitchen-hq.png)"></div></div>
+      <div class="hero__slides" aria-hidden="true"><div class="hero__slide is-loaded" style="background-image:url(assets/hero0.webp)"></div><div class="hero__slide" data-bg="assets/hero-agafonov-v2.webp"></div><div class="hero__slide" data-bg="assets/hero-bathroom-hq.webp"></div><div class="hero__slide" data-bg="assets/hero-kitchen-hq.webp"></div></div>
       <div class="hero__shade"></div>
       <div class="hero__content">
         <p class="eyebrow reveal">Пространства для вашей жизни</p>
@@ -67,7 +68,7 @@
     </section>
 
     <section class="section intro" id="about">
-      <div class="section__label"><span>01</span> О компании</div>
+      <div class="section__label reveal"><span>01</span> О компании</div>
       <div class="intro__grid">
         <div class="intro__statement reveal">
           <h2 class="section__title"><span>Один</span><span>подрядчик</span><span>вместо</span><i>десятков</i></h2>
@@ -78,12 +79,12 @@
           <p>Планируем последовательность работ заранее, координируем специалистов и отвечаем за конечный результат.</p>
           <a class="intro__more" href="#team">Узнать больше о компании <span>→</span></a>
         </div>
-        <figure class="intro__visual reveal"><img src="assets/about-background-v3.png?v=2" alt="Минималистичный светлый интерьер с панорамным окном и отделкой из тёмного дерева" loading="lazy"><figcaption>Пространства<br>для жизни,<br>в которых<br>хочется быть</figcaption></figure>
+        <figure class="intro__visual reveal"><img decoding="async" src="assets/about-background-v3.webp?v=2" alt="Минималистичный светлый интерьер с панорамным окном и отделкой из тёмного дерева" loading="lazy"><figcaption>Пространства<br>для жизни,<br>в которых<br>хочется быть</figcaption></figure>
       </div>
       <div class="principles" id="advantages" tabindex="0" aria-label="Наши преимущества. Листайте карточки">
-        <article class="reveal"><b>01</b><img class="principle-art" src="assets/principle-contract.svg" alt="" loading="lazy"><h3>Работа по договору</h3><p>Фиксируем объём работ, стоимость и ответственность сторон до начала ремонта.</p></article>
-        <article class="reveal"><b>02</b><img class="principle-art" src="assets/principle-guarantee.svg" alt="" loading="lazy"><h3>Гарантия 12 месяцев</h3><p>Даём гарантию на выполненный комплекс работ, а не на отдельные операции.</p></article>
-        <article class="reveal"><b>03</b><img class="principle-art" src="assets/principle-measure.svg" alt="" loading="lazy"><h3>Контроль всех этапов ремонта</h3><p>Следим за последовательностью работ, сроками и тем, как решения на одном этапе влияют на следующий.</p></article>
+        <article class="reveal"><b>01</b><img decoding="async" class="principle-art" src="assets/principle-contract.svg" alt="" loading="lazy"><h3>Работа по договору</h3><p>Фиксируем объём работ, стоимость и ответственность сторон до начала ремонта.</p></article>
+        <article class="reveal"><b>02</b><img decoding="async" class="principle-art" src="assets/principle-guarantee.svg" alt="" loading="lazy"><h3>Гарантия 12 месяцев</h3><p>Даём гарантию на выполненный комплекс работ, а не на отдельные операции.</p></article>
+        <article class="reveal"><b>03</b><img decoding="async" class="principle-art" src="assets/principle-measure.svg" alt="" loading="lazy"><h3>Контроль всех этапов ремонта</h3><p>Следим за последовательностью работ, сроками и тем, как решения на одном этапе влияют на следующий.</p></article>
       </div><div class="advantages-controls"><span class="advantages-counter">01 / 03</span><div><button type="button" class="advantages-prev" aria-label="Предыдущее преимущество">←</button><button type="button" class="advantages-next" aria-label="Следующее преимущество">→</button></div></div>
 </section>
 <section class="section services" id="services">
@@ -95,10 +96,10 @@
           <p>Работаем с квартирами в новостройках и вторичном жилье, таунхаусами и загородными домами.</p>
           <a class="services__all" href="#contact"><span>Узнать стоимость</span><i aria-hidden="true">→</i></a>
         </div>
-        <a class="service-seg service-seg--01 reveal" href="#contact"><span class="service-seg__media" style="background-image:url(assets/service-design-generated.png)"></span><span class="service-seg__content"><span class="service-seg__num">01</span><span class="service-seg__name">Дизайн-<br>проект</span></span></a>
-        <a class="service-seg service-seg--02 reveal" href="#contact"><span class="service-seg__media" style="background-image:url(assets/service-renovation-generated.png)"></span><span class="service-seg__content"><span class="service-seg__num">02</span><span class="service-seg__name">Ремонт<br>квартир</span></span></a>
-        <a class="service-seg service-seg--03 reveal" href="#contact"><span class="service-seg__media" style="background-image:url(assets/service-house-generated.png)"></span><span class="service-seg__content"><span class="service-seg__num">03</span><span class="service-seg__name">Строительство<br>домов</span></span></a>
-        <a class="service-seg service-seg--04 reveal" href="#contact"><span class="service-seg__media" style="background-image:url(assets/service-kitchen-generated.png)"></span><span class="service-seg__content"><span class="service-seg__num">04</span><span class="service-seg__name">Корпусная<br>мебель</span></span></a>
+        <a class="service-seg service-seg--01 reveal" href="#contact"><span class="service-seg__media" data-bg="assets/service-design-generated.webp"></span><span class="service-seg__content"><span class="service-seg__num">01</span><span class="service-seg__name">Дизайн-<br>проект</span></span></a>
+        <a class="service-seg service-seg--02 reveal" href="#contact"><span class="service-seg__media" data-bg="assets/service-renovation-generated.webp"></span><span class="service-seg__content"><span class="service-seg__num">02</span><span class="service-seg__name">Ремонт<br>квартир</span></span></a>
+        <a class="service-seg service-seg--03 reveal" href="#contact"><span class="service-seg__media" data-bg="assets/service-house-generated.webp"></span><span class="service-seg__content"><span class="service-seg__num">03</span><span class="service-seg__name">Строительство<br>домов</span></span></a>
+        <a class="service-seg service-seg--04 reveal" href="#contact"><span class="service-seg__media" data-bg="assets/service-kitchen-generated.webp"></span><span class="service-seg__content"><span class="service-seg__num">04</span><span class="service-seg__name">Корпусная<br>мебель</span></span></a>
       </div>
     </section>
 
@@ -111,11 +112,11 @@
       <div class="formats__grid">
         <article class="formats__card reveal">
           <div class="formats__copy"><b>01</b><h3>Ремонт под ключ</h3><p>Для тех, кто хочет передать весь объект одной команде и получить готовый результат.</p><a href="#contact">Подробнее <span>→</span></a></div>
-          <figure class="formats__visual"><img src="assets/format-turnkey-plan.png" alt="Архитектурный план квартиры" loading="lazy"><figcaption>От идеи<br>до готового<br>интерьера</figcaption></figure>
+          <figure class="formats__visual"><img decoding="async" src="assets/format-turnkey-plan.webp" alt="Архитектурный план квартиры" loading="lazy"><figcaption>От идеи<br>до готового<br>интерьера</figcaption></figure>
         </article>
         <article class="formats__card reveal">
           <div class="formats__copy"><b>02</b><h3>Ремонт в два этапа</h3><p>Для тех, кому удобнее сначала выполнить черновые и инженерные работы, а к чистовой отделке вернуться позже.</p><a href="#contact">Подробнее <span>→</span></a></div>
-          <figure class="formats__visual"><img src="assets/format-two-stage-section.png" alt="Архитектурный разрез стены и перекрытия" loading="lazy"><figcaption>Гибкий<br>подход под<br>ваши планы</figcaption></figure>
+          <figure class="formats__visual"><img decoding="async" src="assets/format-two-stage-section.webp" alt="Архитектурный разрез стены и перекрытия" loading="lazy"><figcaption>Гибкий<br>подход под<br>ваши планы</figcaption></figure>
         </article>
       </div>
       <h3 class="formats__subtitle reveal">Во всех форматах соблюдаем <i>технологию</i></h3>
@@ -142,14 +143,14 @@
       <div class="project-carousel reveal" aria-label="Карусель проектов Дениса Агафонова">
         <div class="project-track" tabindex="0" aria-label="Страницы проектов">
           <div class="project-page">
-            <article class="project-card project-card--big project-card--verified"><button class="project-card__main" type="button" data-gallery="13"><img src="assets/vk-bathroom-clean.png" alt="Светлая ванная комната с мраморной плиткой и деревянными рейками"></button><div class="project-card__body"><span class="project-card__tag">Частный дом</span><h3>Ванная комната</h3><span class="project-card__meta">Эстетика в деталях</span></div><span class="project-card__index">01 / 03</span><button class="project-card__arrow" type="button" data-gallery="13" aria-label="Смотреть фото крупнее">→</button></article>
-            <article class="project-card"><button class="project-card__main" type="button" data-gallery="24"><img src="assets/vk-project-05-kitchen-wood.jpg" alt="Готовая кухня в дереве и белом цвете"></button><div class="project-card__body"><span class="project-card__tag">Квартира</span><h3>Кухня в дереве и белом</h3></div><span class="project-card__index">02 / 03</span><button class="project-card__arrow" type="button" data-gallery="24" aria-label="Смотреть фото крупнее">→</button></article>
-            <article class="project-card project-card--verified"><button class="project-card__main" type="button" data-gallery="26"><img src="assets/vk-project-07-bathroom-dark.jpg" alt="Тёмная ванная комната с чёрной сантехникой"></button><div class="project-card__body"><span class="project-card__tag">Квартира</span><h3>Ванная в тёмных тонах</h3></div><span class="project-card__index">03 / 03</span><button class="project-card__arrow" type="button" data-gallery="26" aria-label="Смотреть фото крупнее">→</button></article>
+            <article class="project-card project-card--big project-card--verified"><button class="project-card__main" type="button" data-gallery="13"><img decoding="async" loading="lazy" src="assets/vk-bathroom-clean.webp" alt="Светлая ванная комната с мраморной плиткой и деревянными рейками"></button><div class="project-card__body"><span class="project-card__tag">Частный дом</span><h3>Ванная комната</h3><span class="project-card__meta">Эстетика в деталях</span></div><span class="project-card__index">01 / 03</span><button class="project-card__arrow" type="button" data-gallery="13" aria-label="Смотреть фото крупнее">→</button></article>
+            <article class="project-card"><button class="project-card__main" type="button" data-gallery="24"><img decoding="async" loading="lazy" src="assets/vk-project-05-kitchen-wood.webp" alt="Готовая кухня в дереве и белом цвете"></button><div class="project-card__body"><span class="project-card__tag">Квартира</span><h3>Кухня в дереве и белом</h3></div><span class="project-card__index">02 / 03</span><button class="project-card__arrow" type="button" data-gallery="24" aria-label="Смотреть фото крупнее">→</button></article>
+            <article class="project-card project-card--verified"><button class="project-card__main" type="button" data-gallery="26"><img decoding="async" loading="lazy" src="assets/vk-project-07-bathroom-dark.webp" alt="Тёмная ванная комната с чёрной сантехникой"></button><div class="project-card__body"><span class="project-card__tag">Квартира</span><h3>Ванная в тёмных тонах</h3></div><span class="project-card__index">03 / 03</span><button class="project-card__arrow" type="button" data-gallery="26" aria-label="Смотреть фото крупнее">→</button></article>
           </div>
           <div class="project-page">
-            <article class="project-card project-card--big project-card--verified"><button class="project-card__main" type="button" data-gallery="14"><img src="assets/kitchen-12766-01.jpg" alt="Установленная кухня — рабочая зона с мойкой и варочной панелью"></button><div class="project-card__body"><span class="project-card__tag">Квартира</span><h3>Кухня под ключ</h3><span class="project-card__meta">От чертежа до сдачи</span></div><span class="project-card__index">01 / 03</span><button class="project-card__arrow" type="button" data-gallery="14" aria-label="Смотреть фото крупнее">→</button></article>
-            <article class="project-card"><button class="project-card__main" type="button" data-gallery="22"><img src="assets/vk-project-09-kitchen-beige.jpg" alt="Готовая бежевая кухня со встроенной техникой"></button><div class="project-card__body"><span class="project-card__tag">Квартира</span><h3>Кухня в бежевом</h3></div><span class="project-card__index">02 / 03</span><button class="project-card__arrow" type="button" data-gallery="22" aria-label="Смотреть фото крупнее">→</button></article>
-            <article class="project-card"><button class="project-card__main" type="button" data-gallery="27"><img src="assets/vk-project-10-hallway.jpg" alt="Готовая прихожая со шкафом-купе"></button><div class="project-card__body"><span class="project-card__tag">Квартира</span><h3>Прихожая</h3></div><span class="project-card__index">03 / 03</span><button class="project-card__arrow" type="button" data-gallery="27" aria-label="Смотреть фото крупнее">→</button></article>
+            <article class="project-card project-card--big project-card--verified"><button class="project-card__main" type="button" data-gallery="14"><img decoding="async" loading="lazy" src="assets/kitchen-12766-01.webp" alt="Установленная кухня — рабочая зона с мойкой и варочной панелью"></button><div class="project-card__body"><span class="project-card__tag">Квартира</span><h3>Кухня под ключ</h3><span class="project-card__meta">От чертежа до сдачи</span></div><span class="project-card__index">01 / 03</span><button class="project-card__arrow" type="button" data-gallery="14" aria-label="Смотреть фото крупнее">→</button></article>
+            <article class="project-card"><button class="project-card__main" type="button" data-gallery="22"><img decoding="async" loading="lazy" src="assets/vk-project-09-kitchen-beige.webp" alt="Готовая бежевая кухня со встроенной техникой"></button><div class="project-card__body"><span class="project-card__tag">Квартира</span><h3>Кухня в бежевом</h3></div><span class="project-card__index">02 / 03</span><button class="project-card__arrow" type="button" data-gallery="22" aria-label="Смотреть фото крупнее">→</button></article>
+            <article class="project-card"><button class="project-card__main" type="button" data-gallery="27"><img decoding="async" loading="lazy" src="assets/vk-project-10-hallway.webp" alt="Готовая прихожая со шкафом-купе"></button><div class="project-card__body"><span class="project-card__tag">Квартира</span><h3>Прихожая</h3></div><span class="project-card__index">03 / 03</span><button class="project-card__arrow" type="button" data-gallery="27" aria-label="Смотреть фото крупнее">→</button></article>
           </div>
         </div>
         <div class="projects__footer">
@@ -175,7 +176,7 @@
             <article class="reveal"><span>04</span><div><h3>Принимаем объект<br>вместе</h3><p>Проверяем результат, передаём объект и гарантию на выполненные работы.</p></div></article>
           </div>
           <figure class="process__image reveal">
-            <img src="assets/process-interior-v2.png" alt="Современная столовая с панорамным видом на закат">
+            <img decoding="async" loading="lazy" src="assets/process-interior-v2.webp" alt="Современная столовая с панорамным видом на закат">
           </figure>
         </div>
       </div>
@@ -191,22 +192,22 @@
           <a class="button button--yellow measure__cta" href="tel:+79644305825">Записаться на бесплатный замер <b>→</b></a>
         </div>
         <ol class="measure__timeline">
-          <li class="measure__step">
+          <li class="measure__step reveal">
             <span class="measure__step-num">01</span>
             <span class="measure__step-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16 16 4l4 4L8 20H4v-4Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M13 7l4 4M10 10l4 4" stroke="currentColor" stroke-width="1.5"/></svg></span>
             <span class="measure__step-body"><h3>Оцениваем состояние объекта</h3><p>Фиксируем параметры, проверяем стены, пол, потолок и инженерные системы.</p></span>
           </li>
-          <li class="measure__step">
+          <li class="measure__step reveal">
             <span class="measure__step-num">02</span>
             <span class="measure__step-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v10H9l-4 4v-4H4Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
             <span class="measure__step-body"><h3>Обсуждаем планировку и будущие решения</h3><p>Выясняем ваши задачи, пожелания и варианты реализации.</p></span>
           </li>
-          <li class="measure__step">
+          <li class="measure__step reveal">
             <span class="measure__step-num">03</span>
             <span class="measure__step-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18H6Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 8h6M9 12h6M9 16h4" stroke="currentColor" stroke-width="1.5"/></svg></span>
             <span class="measure__step-body"><h3>Определяем объём работ</h3><p>Учитываем все технические особенности и ограничения.</p></span>
           </li>
-          <li class="measure__step measure__step--result">
+          <li class="measure__step measure__step--result reveal">
             <span class="measure__step-num">04</span>
             <span class="measure__step-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18H5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 7h8M8 11h2M12 11h2M16 11h0M8 14h2M12 14h2M16 14h0M8 17h2M12 17h2M16 17h0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
             <span class="measure__step-body"><small>Результат замера</small><h3>Получаете предварительный расчёт</h3><p>Формируем предварительный расчёт с учётом состояния объекта и согласованного объёма работ.</p></span>
@@ -251,7 +252,7 @@
     </section>
 
     <section class="company" id="team">
-      <div class="company__backdrop"><img src="assets/agafonov.png" alt="Денис Агафонов"></div>
+      <div class="company__backdrop"><img decoding="async" loading="lazy" src="assets/agafonov.webp" alt="Денис Агафонов"></div>
       <div class="company__copy"><h2>Денис<br><em>Агафонов</em></h2><p class="lead">Лично веду проект от первого разговора и замера до сдачи объекта. Не передаю клиента от менеджера к прорабу и дальше по цепочке — по ключевым вопросам вы общаетесь непосредственно со мной.</p><div class="company__facts"><div><b>С 2017 года</b><span>работаем во Владивостоке</span></div><div><b>12 мес.</b><span>гарантия на работы</span></div><div><b>1 контакт</b><span>на всех этапах проекта</span></div></div><div class="actions"><a class="button button--yellow" href="tel:+79644305825">ПОЗВОНИТЬ ДЕНИСУ →</a><a class="button button--ghost" href="https://vk.com/denis_agafonovv" target="_blank" rel="noopener">ПРОЕКТЫ В VK</a></div></div>
     </section>
 
@@ -279,9 +280,9 @@
 
   <footer class="footer"><a class="footer__brand" href="#top" aria-label="Агафонов — на главную"><span class="wordmark"><b class="wordmark__title">АГАФОНОВ</b><small class="wordmark__tagline">ремонт · дизайн · строительство</small></span></a><p class="footer__desc">Ремонт и строительство жилых пространств во Владивостоке.</p><div class="footer__end"><div class="footer__social"><a href="tel:+79644305825" aria-label="Позвонить"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.8 15.8 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.7 3.9.7.6 0 1 .4 1 1v3.5c0 .6-.4 1-1 1C10.7 21.2 2.8 13.3 2.8 3.6c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.4.2 2.7.7 3.9.1.4 0 .8-.2 1.1Z"/></svg></a><a href="https://vk.com/denis_agafonovv" target="_blank" rel="noopener" aria-label="ВКонтакте"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.8 17.2c-5.5 0-8.7-3.8-8.9-10.2h2.8c.1 4.7 2.2 6.6 3.8 7V7h2.7v4c1.6-.2 3.3-1.9 3.9-4h2.7a7.7 7.7 0 0 1-3.6 5.1c1.7.8 3.6 2.3 4.3 5.1h-3c-.7-2-2.2-3.5-4.3-3.7v3.7Z"/></svg></a><a href="https://t.me/Denis_Agafonovv" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21.3 4.1-3 15c-.2 1.1-.8 1.4-1.7.9L12 16.6l-2.2 2.1c-.2.3-.5.5-.9.5l.3-4.7 8.6-7.8c.4-.3-.1-.5-.6-.2L6.6 13.2 2 11.7c-1-.3-1-1 .2-1.5l17.9-6.9c.8-.3 1.5.2 1.2.8Z"/></svg></a></div><small>© 2026 Денис Агафонов</small></div></footer>
 
-  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр проекта" aria-hidden="true"><button class="lightbox__close" type="button" aria-label="Закрыть галерею">×</button><button class="lightbox__prev" type="button" aria-label="Предыдущее фото">←</button><figure><img src="assets/project-1.jpg" alt=""><figcaption><span>Ремонт и дизайн</span><b class="lightbox__counter">01 / 07</b></figcaption></figure><button class="lightbox__next" type="button" aria-label="Следующее фото">→</button></div>
-  <script src="script.js?v=20260919-mobile-dock"></script>
+  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр проекта" aria-hidden="true"><button class="lightbox__close" type="button" aria-label="Закрыть галерею">×</button><button class="lightbox__prev" type="button" aria-label="Предыдущее фото">←</button><figure><img decoding="async" loading="lazy" src="assets/project-1.webp" alt=""><figcaption><span>Ремонт и дизайн</span><b class="lightbox__counter">01 / 07</b></figcaption></figure><button class="lightbox__next" type="button" aria-label="Следующее фото">→</button></div>
+  <script src="script.js?v=20260919-motion-webp"></script>
   <script src="map.js?v=static-1"></script>
-  <script src="enhancements.js?v=4"></script>
+  <script src="enhancements.js?v=5-webp"></script>
 </body>
 </html>
