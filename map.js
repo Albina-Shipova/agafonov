@@ -1,11 +1,10 @@
-// Local screenshot: no map library or external tile requests.
 (() => {
  const points = [
   {
     "area": "Эгершельд",
     "lat": 43.1005,
     "lng": 131.8638,
-    "photo": "kitchen-12766-01.jpg",
+    "photo": "kitchen-12766-01.webp",
     "title": "Кухня · рабочая зона",
     "post": "12766",
     "x": 19.1,
@@ -15,7 +14,7 @@
     "area": "Центр",
     "lat": 43.116,
     "lng": 131.887,
-    "photo": "denis-27.jpg",
+    "photo": "denis-27.webp",
     "title": "Чистовая отделка",
     "post": "13139",
     "x": 25.9,
@@ -25,7 +24,7 @@
     "area": "Орлиное гнездо",
     "lat": 43.124,
     "lng": 131.904,
-    "photo": "kitchen-12766-03.jpg",
+    "photo": "kitchen-12766-03.webp",
     "title": "Угловая кухня",
     "post": "12766",
     "x": 30.8,
@@ -35,7 +34,7 @@
     "area": "Чуркин",
     "lat": 43.0897,
     "lng": 131.9176,
-    "photo": "denis-01.jpg",
+    "photo": "denis-01.webp",
     "title": "Отделка ванной",
     "post": "13153",
     "x": 34.8,
@@ -45,7 +44,7 @@
     "area": "Тихая",
     "lat": 43.104,
     "lng": 131.9634,
-    "photo": "denis-03.jpg",
+    "photo": "denis-03.webp",
     "title": "Ремонт ванной",
     "post": "13153",
     "x": 48.1,
@@ -55,7 +54,7 @@
     "area": "Луговая",
     "lat": 43.117,
     "lng": 131.94,
-    "photo": "denis-13.jpg",
+    "photo": "denis-13.webp",
     "title": "Предчистовая отделка",
     "post": "13172",
     "x": 41.3,
@@ -65,7 +64,7 @@
     "area": "Первая Речка",
     "lat": 43.144,
     "lng": 131.908,
-    "photo": "denis-14.jpg",
+    "photo": "denis-14.webp",
     "title": "Подготовка стен",
     "post": "13172",
     "x": 32,
@@ -75,7 +74,7 @@
     "area": "Вторая Речка",
     "lat": 43.179,
     "lng": 131.918,
-    "photo": "denis-15.jpg",
+    "photo": "denis-15.webp",
     "title": "Работы в квартире",
     "post": "13172",
     "x": 34.9,
@@ -85,7 +84,7 @@
     "area": "Снеговая Падь",
     "lat": 43.17755,
     "lng": 131.9394,
-    "photo": "denis-18.jpg",
+    "photo": "denis-18.webp",
     "title": "Комплексный ремонт",
     "post": "13130",
     "x": 41.1,
@@ -95,7 +94,7 @@
     "area": "Седанка",
     "lat": 43.213,
     "lng": 131.953,
-    "photo": "denis-20.jpg",
+    "photo": "denis-20.webp",
     "title": "Детали ремонта",
     "post": "13130",
     "x": 45.1,
@@ -105,7 +104,7 @@
     "area": "Весенняя",
     "lat": 43.276,
     "lng": 132.055,
-    "photo": "denis-29.jpg",
+    "photo": "denis-29.webp",
     "title": "Готовая комната",
     "post": "13139",
     "x": 74.8,
@@ -115,7 +114,7 @@
     "area": "Трудовое",
     "lat": 43.303,
     "lng": 132.083,
-    "photo": "vk-kitchen-01.jpg",
+    "photo": "vk-kitchen-01.webp",
     "title": "Кухня с мебелью и техникой",
     "source": "https://vk.ru/albums-176133912",
     "x": 83,
@@ -126,7 +125,8 @@
  const stage = document.createElement('div');
  stage.className = 'static-map-stage';
  const picture = document.createElement('img');
- picture.src = 'assets/vladivostok-map.png';
+ picture.loading = 'lazy'; picture.decoding = 'async';
+ picture.src = 'assets/vladivostok-map.webp';
  picture.alt = 'Карта Владивостока: городские кварталы и северный пригород';
  picture.width = 1000; picture.height = 1100;
  stage.append(picture); host.append(stage);
@@ -154,7 +154,7 @@
  };
  points.forEach((point,index)=>{
   const button=document.createElement('button'); button.className='static-map-flag';button.type='button';
-  button.style.left=point.x+'%';button.style.top=point.y+'%';button.dataset.index=index;
+  button.style.left=point.x+'%';button.style.top=point.y+'%';button.style.setProperty('--n',index);button.dataset.index=index;
   button.title=point.area;button.setAttribute('aria-label','Показать фото: '+point.area);
   button.innerHTML='<span>'+String(index+1).padStart(2,'0')+'</span>';
   button.addEventListener('click',()=>open(point,index,button));stage.append(button);

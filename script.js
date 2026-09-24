@@ -1,51 +1,64 @@
+const root = document.documentElement;
 const header = document.querySelector('.header');
-document.querySelector('.hero')?.classList.add('hero--motion-ready');
+const hero = document.querySelector('.hero');
 const nav = document.querySelector('.nav');
 const toggle = document.querySelector('.menu-toggle');
 const progress = document.querySelector('.scroll-progress span');
 const sections = [...document.querySelectorAll('main section[id], #advantages')];
 const navLinks = [...document.querySelectorAll('.nav a')];
-const hero = document.querySelector('.hero');
-const finalHeroTitleLine = document.querySelector('.hero__title > span:last-child');
-finalHeroTitleLine?.addEventListener('animationend', event => {
-  if (event.animationName === 'hero-line-arrive') hero?.classList.add('hero--title-settled');
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const pad2 = n => String(n).padStart(2, '0');
+
+hero?.classList.add('hero--motion-ready');
+document.querySelector('.hero__title > span:last-child')?.addEventListener('animationend', event => {
+  if (event.animationName === 'hero-line-arrive') hero.classList.add('hero--title-settled');
 });
+
+/* Прелоадер */
+let siteReady = false;
 const announceSiteReady = () => {
+  if (siteReady) return;
+  siteReady = true;
   hero?.classList.add('hero--entered');
-  document.documentElement.classList.add('site-ready');
+  root.classList.add('site-ready');
   requestAnimationFrame(() => window.dispatchEvent(new Event('site:ready')));
 };
-
-window.addEventListener('load', () => {
+const hideLoader = () => {
   const loader = document.querySelector('.loader');
-  if (!loader) {
-    announceSiteReady();
-    return;
-  }
-  window.setTimeout(() => {
-    loader.classList.add('is-done');
-    window.setTimeout(announceSiteReady, 750);
-  }, 1650);
-});
+  if (!loader || loader.classList.contains('is-done')) return announceSiteReady();
+  loader.classList.add('is-done');
+  setTimeout(announceSiteReady, reducedMotion ? 0 : 420);
+};
+// Прелоадер не ждёт догрузки всех картинок.
+window.addEventListener('load', () => setTimeout(hideLoader, Math.max(0, 1100 - performance.now())));
+setTimeout(hideLoader, 3200);
 
+/* Шапка, прогресс прокрутки, активный пункт меню */
+let scrollQueued = false;
 const onScroll = () => {
-  header.classList.toggle('is-scrolled', window.scrollY > 45);
-  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-  progress.style.width = `${scrollable > 0 ? Math.min(100, (window.scrollY / scrollable) * 100) : 0}%`;
+  scrollQueued = false;
+  const y = window.scrollY;
+  header.classList.toggle('is-scrolled', y > 45);
+  const scrollable = root.scrollHeight - window.innerHeight;
+  progress.style.transform = `scaleX(${scrollable > 0 ? Math.min(1, y / scrollable) : 0})`;
   let current = '';
   sections.forEach(section => { if (section.getBoundingClientRect().top <= 160) current = section.id; });
   navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${current}`));
 };
-window.addEventListener('scroll', onScroll, { passive: true });
-window.addEventListener('resize', onScroll);
+const queueScroll = () => {
+  if (scrollQueued) return;
+  scrollQueued = true;
+  requestAnimationFrame(onScroll);
+};
+window.addEventListener('scroll', queueScroll, { passive: true });
+window.addEventListener('resize', queueScroll);
 onScroll();
 
-// These sections provide their own contact actions; keep them unobstructed.
+/* Плавающие контакты: прячутся там, где у секции свои кнопки связи */
 const dock = document.querySelector('.contact-dock');
-const contactSections = new Set();
 const dockToggle = dock?.querySelector('.contact-dock__toggle');
 const setDockOpen = open => {
-  if (!dock || !dockToggle) return;
+  if (!dockToggle) return;
   dock.classList.toggle('is-open', open);
   dockToggle.setAttribute('aria-expanded', String(open));
   dockToggle.setAttribute('aria-label', open ? 'Закрыть способы связи' : 'Открыть способы связи');
@@ -53,52 +66,30 @@ const setDockOpen = open => {
 if (dockToggle) {
   dockToggle.addEventListener('click', () => setDockOpen(!dock.classList.contains('is-open')));
   dock.querySelectorAll('.contact-dock__methods a').forEach(link => link.addEventListener('click', () => setDockOpen(false)));
-  document.addEventListener('click', event => {
-    if (!dock.contains(event.target)) setDockOpen(false);
-  });
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && dock.classList.contains('is-open')) {
-      setDockOpen(false);
-      dockToggle.focus();
-    }
-  });
+  document.addEventListener('click', event => { if (!dock.contains(event.target)) setDockOpen(false); });
+  const contactSections = new Set();
+  const dockObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => entry.isIntersecting ? contactSections.add(entry.target) : contactSections.delete(entry.target));
+    dock.classList.toggle('is-context-hidden', contactSections.size > 0);
+    if (contactSections.size > 0) setDockOpen(false);
+  }, { threshold: .15 });
+  document.querySelectorAll('#team, #contact, .footer').forEach(section => dockObserver.observe(section));
 }
-const dockObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => entry.isIntersecting ? contactSections.add(entry.target) : contactSections.delete(entry.target));
-  dock.classList.toggle('is-context-hidden', contactSections.size > 0);
-  if (contactSections.size > 0) setDockOpen(false);
-}, {threshold:0.15});
-document.querySelectorAll('#team, #contact, .footer').forEach(section => dockObserver.observe(section));
 
-const closeMenu = () => {
-  nav.classList.remove('open');
-  toggle.setAttribute('aria-expanded', 'false');
-  toggle.setAttribute('aria-label', 'Открыть меню');
-  document.body.classList.remove('menu-open');
-};
-
-toggle.addEventListener('click', () => {
-  const open = nav.classList.toggle('open');
+/* Меню */
+const setMenuOpen = open => {
+  nav.classList.toggle('open', open);
   toggle.setAttribute('aria-expanded', String(open));
   toggle.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
   document.body.classList.toggle('menu-open', open);
-});
-navLinks.forEach(link => link.addEventListener('click', () => {
-  closeMenu();
-}));
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && nav.classList.contains('open')) {
-    closeMenu();
-    toggle.focus();
-  }
-});
+};
+toggle.addEventListener('click', () => setMenuOpen(!nav.classList.contains('open')));
+navLinks.forEach(link => link.addEventListener('click', () => setMenuOpen(false)));
 window.addEventListener('resize', () => {
-  if (window.innerWidth > 1350 && nav.classList.contains('open')) closeMenu();
+  if (window.innerWidth > 1350 && nav.classList.contains('open')) setMenuOpen(false);
 });
 
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-// Native lazy loading covers <img>; backgrounds need an explicit observer.
+/* Фоновые картинки грузятся на подходе к экрану */
 const loadBackground = element => {
   const source = element.dataset.bg;
   if (!source) return;
@@ -120,51 +111,56 @@ const backgroundObserver = new IntersectionObserver(entries => {
 }, { rootMargin: '450px 0px' });
 document.querySelectorAll('[data-bg]:not(.hero__slide)').forEach(element => backgroundObserver.observe(element));
 
+/* Счётчики: 100+, 98%, 12 */
+const countUp = el => {
+  const match = el.textContent.trim().match(/^(\D*)(\d+)(\D*)$/);
+  if (!match || Number(match[2]) > 999) return;
+  const [, before, digits, after] = match;
+  const target = Number(digits);
+  el.style.minWidth = `${el.getBoundingClientRect().width}px`;
+  const start = performance.now();
+  const tick = now => {
+    const ratio = Math.min((now - start) / 1500, 1);
+    el.textContent = before + Math.round(target * (1 - Math.pow(1 - ratio, 4))) + after;
+    if (ratio < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+};
+
+/* Появление при прокрутке */
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
-    entry.target.classList.add('visible');
-    revealObserver.unobserve(entry.target);
-  });
-}, { threshold: .12, rootMargin: '0px 0px -5% 0px' });
-document.querySelectorAll('.reveal').forEach((el, index) => {
-  el.style.setProperty('--reveal-order', index % 4);
-  if (reducedMotion) el.classList.add('visible');
-  else revealObserver.observe(el);
-});
-
-const countObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
     const el = entry.target;
-    const target = Number(el.dataset.count);
-    const decimal = el.dataset.decimal;
-    const start = performance.now();
-    const duration = 1400;
-    const tick = now => {
-      const ratio = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - ratio, 3);
-      el.textContent = decimal ? (target * eased).toFixed(1).replace('.', ',') : Math.round(target * eased);
-      if (ratio < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-    countObserver.unobserve(el);
+    el.classList.add('visible');
+    if (!reducedMotion) el.querySelectorAll('.hero__stats strong, .reviews__stats b').forEach(countUp);
+    revealObserver.unobserve(el);
   });
-}, { threshold: .5 });
-window.addEventListener('site:ready', () => { document.querySelectorAll('[data-count]').forEach(el => countObserver.observe(el)); });
+}, { threshold: .14, rootMargin: '0px 0px -6% 0px' });
+const revealTargets = document.querySelectorAll('.reveal, .measure__timeline, .hero__stats, .reviews__track, .company__backdrop, .company__copy, .static-map-frame');
+revealTargets.forEach(el => {
+  if (el.classList.contains('reveal')) {
+    const siblings = [...el.parentElement.children].filter(child => child.classList.contains('reveal'));
+    el.style.setProperty('--reveal-order', Math.min(siblings.indexOf(el), 5));
+  }
+});
+const startReveal = scope => revealTargets.forEach(el => {
+  if (scope(el)) reducedMotion ? el.classList.add('visible') : revealObserver.observe(el);
+});
+// Первый экран — после прелоадера, остальное — при прокрутке.
+startReveal(el => !hero?.contains(el));
+window.addEventListener('site:ready', () => startReveal(el => hero?.contains(el)), { once: true });
 
+/* Отзывы */
 const reviewViewport = document.querySelector('.reviews__viewport');
 const reviewTrack = document.querySelector('.reviews__track');
-const reviewCards = [...document.querySelectorAll('.reviews__track blockquote')];
-let reviewIndex = 0;
-let touchStartX = 0;
-let touchStartY = 0;
+const reviewCards = [...reviewTrack.children];
 const reviewPrev = document.querySelector('.review-prev');
 const reviewNext = document.querySelector('.review-next');
 const reviewProgress = document.querySelector('.reviews__progress i');
 const reviewCount = document.querySelector('.reviews__count');
+let reviewIndex = 0;
 const reviewsVisible = () => window.innerWidth <= 700 ? 1 : window.innerWidth <= 1000 ? 2 : 3;
-const pad2 = n => String(n).padStart(2, '0');
 const updateReviews = () => {
   const cardWidth = reviewCards[0]?.getBoundingClientRect().width || 0;
   const maxIndex = Math.max(0, reviewCards.length - reviewsVisible());
@@ -174,25 +170,34 @@ const updateReviews = () => {
   reviewTrack.style.transform = `translateX(${-offset}px)`;
   reviewPrev.disabled = reviewIndex === 0;
   reviewNext.disabled = reviewIndex === maxIndex;
-  if (reviewProgress) reviewProgress.style.width = `${maxIndex === 0 ? 100 : (reviewIndex / maxIndex) * 100}%`;
-  if (reviewCount) reviewCount.textContent = `${pad2(reviewIndex + 1)} / ${pad2(reviewCards.length)}`;
+  reviewProgress.style.width = `${maxIndex === 0 ? 100 : (reviewIndex / maxIndex) * 100}%`;
+  reviewCount.textContent = `${pad2(reviewIndex + 1)} / ${pad2(reviewCards.length)}`;
 };
-document.querySelector('.review-prev').addEventListener('click', () => { reviewIndex -= 1; updateReviews(); });
-document.querySelector('.review-next').addEventListener('click', () => { reviewIndex += 1; updateReviews(); });
-reviewViewport.addEventListener('keydown', event => {
-  if (event.key === 'ArrowLeft') { event.preventDefault(); reviewIndex -= 1; updateReviews(); }
-  if (event.key === 'ArrowRight') { event.preventDefault(); reviewIndex += 1; updateReviews(); }
-});
-reviewViewport.addEventListener('touchstart', event => { touchStartX = event.touches[0].clientX; touchStartY = event.touches[0].clientY; }, { passive: true });
-reviewViewport.addEventListener('touchend', event => {
-  const delta = event.changedTouches[0].clientX - touchStartX;
-  if (Math.abs(delta) < 45 || Math.abs(delta) < Math.abs(event.changedTouches[0].clientY - touchStartY)) return;
-  reviewIndex += delta < 0 ? 1 : -1;
-  updateReviews();
-}, { passive: true });
+const stepReviews = direction => { reviewIndex += direction; updateReviews(); };
+
+/* Свайп и стрелки для каруселей */
+const bindSwipe = (element, step) => {
+  let startX = 0;
+  let startY = 0;
+  element.addEventListener('touchstart', event => { startX = event.touches[0].clientX; startY = event.touches[0].clientY; }, { passive: true });
+  element.addEventListener('touchend', event => {
+    const dx = event.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(event.changedTouches[0].clientY - startY)) return;
+    step(dx < 0 ? 1 : -1);
+  }, { passive: true });
+  element.addEventListener('keydown', event => {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    event.preventDefault();
+    step(event.key === 'ArrowRight' ? 1 : -1);
+  });
+};
+reviewPrev.addEventListener('click', () => stepReviews(-1));
+reviewNext.addEventListener('click', () => stepReviews(1));
+bindSwipe(reviewViewport, stepReviews);
 window.addEventListener('resize', updateReviews);
 updateReviews();
 
+/* Галерея */
 const galleryImages = [
   { src: 'assets/denis-01.webp', alt: 'Отделка ванной комнаты — проект Дениса Агафонова' },
   { src: 'assets/denis-02.webp', alt: 'Деталь отделки ванной комнаты' },
@@ -226,30 +231,31 @@ const galleryImages = [
 const lightbox = document.querySelector('.lightbox');
 const lightboxImage = lightbox.querySelector('img');
 const lightboxCounter = lightbox.querySelector('.lightbox__counter');
-let galleryIndex = 0;
-const projectGalleryGroup = [...new Set(
+const lightboxButtons = [...lightbox.querySelectorAll('button')];
+const projectGallery = [...new Set(
   [...document.querySelectorAll('.project-card [data-gallery]')]
     .map(button => Number(button.dataset.gallery))
-    .filter(index => Number.isInteger(index) && galleryImages[index])
+    .filter(index => galleryImages[index])
 )];
-let galleryGroup = projectGalleryGroup.length ? projectGalleryGroup : galleryImages.map((_, index) => index);
+let galleryIndex = 0;
 let galleryTrigger = null;
 const renderLightbox = () => {
   const item = galleryImages[galleryIndex];
+  lightboxImage.classList.remove('is-shown');
+  lightboxImage.onload = lightboxImage.onerror = () => lightboxImage.classList.add('is-shown');
   lightboxImage.src = item.src;
   lightboxImage.alt = item.alt;
-  lightboxCounter.textContent = `${String(galleryGroup.indexOf(galleryIndex) + 1).padStart(2, '0')} / ${String(galleryGroup.length).padStart(2, '0')}`;
+  if (lightboxImage.complete) lightboxImage.classList.add('is-shown');
+  lightboxCounter.textContent = `${pad2(projectGallery.indexOf(galleryIndex) + 1)} / ${pad2(projectGallery.length)}`;
 };
-const openLightbox = (index, card) => {
-  galleryGroup = card && projectGalleryGroup.length ? projectGalleryGroup : galleryImages.map((_, i) => i);
-  if (!galleryGroup.includes(index)) galleryGroup = [index, ...galleryGroup];
+const openLightbox = index => {
   galleryTrigger = document.activeElement;
   galleryIndex = index;
   renderLightbox();
   lightbox.classList.add('open');
   lightbox.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
-  lightbox.querySelector('.lightbox__close').focus();
+  lightboxButtons[0].focus();
 };
 const closeLightbox = () => {
   lightbox.classList.remove('open');
@@ -258,55 +264,113 @@ const closeLightbox = () => {
   galleryTrigger?.focus();
 };
 const stepLightbox = direction => {
-  if (!galleryGroup.length) return;
-  const currentPosition = Math.max(0, galleryGroup.indexOf(galleryIndex));
-  galleryIndex = galleryGroup[(currentPosition + direction + galleryGroup.length) % galleryGroup.length];
+  const position = Math.max(0, projectGallery.indexOf(galleryIndex));
+  galleryIndex = projectGallery[(position + direction + projectGallery.length) % projectGallery.length];
   renderLightbox();
 };
-document.querySelectorAll('.project-card__main[data-gallery], .project-card__arrow[data-gallery]').forEach(button => button.addEventListener('click', () => openLightbox(Number(button.dataset.gallery), button.closest('.project-card'))));
+document.querySelectorAll('.project-card [data-gallery]').forEach(button => button.addEventListener('click', () => openLightbox(Number(button.dataset.gallery))));
 lightbox.querySelector('.lightbox__close').addEventListener('click', closeLightbox);
 lightbox.querySelector('.lightbox__prev').addEventListener('click', () => stepLightbox(-1));
 lightbox.querySelector('.lightbox__next').addEventListener('click', () => stepLightbox(1));
 lightbox.addEventListener('click', event => { if (event.target === lightbox) closeLightbox(); });
-document.addEventListener('keydown', event => {
-  if (!lightbox.classList.contains('open')) return;
-  if (event.key === 'Escape') closeLightbox();
-  if (event.key === 'ArrowLeft') stepLightbox(-1);
-  if (event.key === 'ArrowRight') stepLightbox(1);
-});
 
+/* Проекты */
 const projectTrack = document.querySelector('.project-track');
-const projectPages = [...document.querySelectorAll('.project-page')];
-const projectCards = [...document.querySelectorAll('.project-card')];
+const projectPages = [...projectTrack.children];
+const projectCards = projectTrack.querySelectorAll('.project-card');
 const projectCurrent = document.querySelector('.project-current');
 const projectPrev = document.querySelector('.project-prev');
 const projectNext = document.querySelector('.project-next');
 const PROJECT_PAGE_SIZE = 3;
 let projectIndex = 0;
-let projectTouchX = 0;
-let projectTouchY = 0;
 const updateProjects = () => {
   const maxIndex = projectPages.length - 1;
   projectIndex = Math.max(0, Math.min(projectIndex, maxIndex));
   projectTrack.style.transform = `translate3d(${-projectIndex * 100}%, 0, 0)`;
+  projectPages.forEach((page, index) => page.classList.toggle('is-current', index === projectIndex));
   const first = projectIndex * PROJECT_PAGE_SIZE + 1;
   const last = Math.min(projectCards.length, first + PROJECT_PAGE_SIZE - 1);
-  projectCurrent.textContent = `${String(first).padStart(2, '0')}–${String(last).padStart(2, '0')}`;
+  projectCurrent.textContent = `${pad2(first)}–${pad2(last)}`;
   projectPrev.disabled = projectIndex === 0;
   projectNext.disabled = projectIndex === maxIndex;
 };
-projectPrev.addEventListener('click', () => { projectIndex -= 1; updateProjects(); });
-projectNext.addEventListener('click', () => { projectIndex += 1; updateProjects(); });
-projectTrack.addEventListener('keydown', event => {
-  if (event.key === 'ArrowLeft') { event.preventDefault(); projectIndex -= 1; updateProjects(); }
-  if (event.key === 'ArrowRight') { event.preventDefault(); projectIndex += 1; updateProjects(); }
-});
-projectTrack.addEventListener('touchstart', event => { projectTouchX = event.touches[0].clientX; projectTouchY = event.touches[0].clientY; }, { passive: true });
-projectTrack.addEventListener('touchend', event => {
-  const delta = event.changedTouches[0].clientX - projectTouchX;
-  if (Math.abs(delta) < 45 || Math.abs(delta) < Math.abs(event.changedTouches[0].clientY - projectTouchY)) return;
-  projectIndex += delta < 0 ? 1 : -1;
-  updateProjects();
-}, { passive: true });
-window.addEventListener('resize', updateProjects);
+const stepProjects = direction => { projectIndex += direction; updateProjects(); };
+projectPrev.addEventListener('click', () => stepProjects(-1));
+projectNext.addEventListener('click', () => stepProjects(1));
+bindSwipe(projectTrack, stepProjects);
 updateProjects();
+
+/* Слайд-шоу первого экрана */
+(() => {
+  const slides = [...document.querySelectorAll('.hero__slide')];
+  let slideIndex = 0;
+  let slideTimer;
+  let started = false;
+  const advance = () => {
+    const previous = slides[slideIndex];
+    previous.classList.remove('is-active');
+    previous.classList.add('is-leaving');
+    slideIndex = (slideIndex + 1) % slides.length;
+    slides[slideIndex].classList.remove('is-leaving');
+    slides[slideIndex].classList.add('is-active');
+  };
+  const start = () => {
+    if (started) return;
+    started = true;
+    slides[0]?.classList.add('is-active');
+    slides.slice(1).forEach((slide, index) => setTimeout(() => loadBackground(slide), 700 + index * 350));
+    if (!reducedMotion) slideTimer = setInterval(advance, 11000);
+  };
+  window.addEventListener('site:ready', start, { once: true });
+  document.addEventListener('visibilitychange', () => {
+    clearInterval(slideTimer);
+    if (!document.hidden && started && !reducedMotion) slideTimer = setInterval(advance, 11000);
+  });
+})();
+
+/* Преимущества: карусель на телефоне */
+(() => {
+  const track = document.querySelector('.principles');
+  const cards = [...track.children];
+  const previous = document.querySelector('.advantages-prev');
+  const next = document.querySelector('.advantages-next');
+  const counter = document.querySelector('.advantages-counter');
+  const cardStep = () => cards[0].getBoundingClientRect().width + 16;
+  const index = () => Math.round(track.scrollLeft / cardStep());
+  const update = () => {
+    const active = Math.max(0, Math.min(cards.length - 1, index()));
+    counter.textContent = `${pad2(active + 1)} / ${pad2(cards.length)}`;
+    previous.disabled = active === 0;
+    next.disabled = active === cards.length - 1;
+  };
+  const step = direction => track.scrollTo({ left: Math.max(0, Math.min(cards.length - 1, index() + direction)) * cardStep(), behavior: reducedMotion ? 'auto' : 'smooth' });
+  previous.addEventListener('click', () => step(-1));
+  next.addEventListener('click', () => step(1));
+  track.addEventListener('scroll', update, { passive: true });
+  track.addEventListener('keydown', event => {
+    if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+    event.preventDefault();
+    step(event.key === 'ArrowRight' ? 1 : -1);
+  });
+  window.addEventListener('resize', update);
+  update();
+})();
+
+/* Клавиатура */
+document.addEventListener('keydown', event => {
+  if (lightbox.classList.contains('open')) {
+    if (event.key === 'Escape') closeLightbox();
+    if (event.key === 'ArrowLeft') stepLightbox(-1);
+    if (event.key === 'ArrowRight') stepLightbox(1);
+    if (event.key === 'Tab') {
+      const first = lightboxButtons[0];
+      const last = lightboxButtons.at(-1);
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    }
+    return;
+  }
+  if (event.key !== 'Escape') return;
+  if (nav.classList.contains('open')) { setMenuOpen(false); toggle.focus(); }
+  if (dock?.classList.contains('is-open')) { setDockOpen(false); dockToggle.focus(); }
+});
