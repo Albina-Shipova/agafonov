@@ -1389,7 +1389,7 @@ button,a{-webkit-tap-highlight-color:transparent}button{font:inherit}button:focu
 
   /* Заголовки */
   h2.reveal.visible,.reveal.visible h2{animation:title-rise 1.25s var(--ease-out) backwards;animation-delay:calc(var(--reveal-order,0)*90ms + .05s)}
-  h2.reveal:not(.visible),.reveal:not(.visible) h2{clip-path:inset(100% -5% -25% -5%)}
+  .reveal:not(.visible) h2{clip-path:inset(100% -5% -25% -5%)}
   @keyframes title-rise{from{clip-path:inset(100% -5% -25% -5%);translate:0 .35em}to{clip-path:inset(-25% -5% -25% -5%);translate:0 0}}
 
   /* Подчёркивание акцентов */
@@ -1434,7 +1434,6 @@ button,a{-webkit-tap-highlight-color:transparent}button{font:inherit}button:focu
 
   /* Услуги */
   .service-seg.reveal.visible{animation:seg-rise 1.3s var(--ease-out) backwards;animation-delay:calc(var(--reveal-order,0)*110ms)}
-  .service-seg.reveal:not(.visible){clip-path:inset(100% 0 0 0)}
   .service-seg__media{transition-property:transform,filter,scale;transition-duration:.8s,.8s,1.8s}
   .service-seg:not(.visible) .service-seg__media{scale:1.22}
   @keyframes seg-rise{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
