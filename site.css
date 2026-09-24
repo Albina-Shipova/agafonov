@@ -224,7 +224,7 @@ button,a{-webkit-tap-highlight-color:transparent}button{font:inherit}button:focu
  .intro__statement{position:absolute;inset:0;width:100%;height:490px;padding:0;display:block}
  .intro .section__title{position:absolute;top:165px;width:47%;max-width:none;margin:0;font-size:clamp(48px,3.45vw,66px);line-height:.94;letter-spacing:-.04em}
  .intro .section__title i{font-weight:800}
- .intro__directions{left:unset;top:428px;bottom:auto;width:39%;font-size:16px;line-height:1.5}
+ .intro__directions{left:unset;top:428px;bottom:auto;width:39%;font-size:16px;line-height:1.5;white-space:normal}
  .intro__copy{position:absolute;left:49.5%;top:180px;width:21.35%;min-width:260px;max-width:410px;padding:0}
  .intro__copy .lead{margin:0;font-size:17px;line-height:1.35}
  .intro__copy p{margin:18px 0 0;font-size:14px;line-height:1.45}
@@ -1524,4 +1524,77 @@ button,a{-webkit-tap-highlight-color:transparent}button{font:inherit}button:focu
   .brand .wordmark__tagline,.footer__brand .wordmark__tagline{font-size:8px}
   .hero__content>.eyebrow{font-size:9px}
   .hero__stats span{font-size:9px}
+}
+
+/* Более спокойный темп движения на всём сайте */
+@media (prefers-reduced-motion:no-preference){
+  .loader{transition-duration:1s}
+  .loader__line span{animation-duration:1.45s}
+  .loader .brand-mark{animation-duration:1.7s}
+  .loader img{animation-duration:2.3s}
+
+  .header{transition-duration:.5s}
+  .nav a::after,.button,.contact__social,.contact__social span,
+  .footer__social a,.contact-dock a span,.project-card__arrow,
+  .project-controls button,.reviews__nav button,.services__all,
+  .services__all i,.intro__more{transition-duration:.4s}
+  .principles article,.timeline article,.reviews__track blockquote{transition-duration:.5s}
+
+  .hero.hero--entered .hero__title>span{animation-duration:1.25s}
+  .hero.hero--entered .hero__title>span:nth-child(2){animation-delay:.62s}
+  .hero.hero--entered .hero__title>span:nth-child(3){animation-delay:1.24s}
+  .hero__slide{transition-duration:2.6s}
+  .hero__slide.is-active{animation-duration:11.5s}
+  .hero__orbit::before{animation-duration:17s}
+  .hero__orbit b{animation-duration:2.4s}
+  .service--image.is-in-view img{animation-duration:20s}
+
+  .reveal{transition-duration:1.3s,1.6s;transition-delay:calc(var(--reveal-order,0)*130ms)}
+  .principles article.reveal{transition-duration:1.3s,1.6s,.5s;transition-delay:calc(var(--reveal-order,0)*160ms),calc(var(--reveal-order,0)*160ms),0s}
+  .timeline article.reveal{transition-duration:1.3s,1.6s,.5s,.5s;transition-delay:calc(var(--reveal-order,0)*170ms),calc(var(--reveal-order,0)*170ms),0s,0s}
+  h2.reveal.visible,.reveal.visible h2{animation-duration:1.8s;animation-delay:calc(var(--reveal-order,0)*130ms + .08s)}
+  :is(.section__title i,.services__title i,.process h2 em,.company h2 em,.formats__subtitle i){transition-duration:2s;transition-delay:1s}
+  .section__label::after{transition-duration:1.85s;transition-delay:.45s}
+  .section__label>span{transition-duration:1s;transition-delay:.22s}
+
+  :is(.process__image,.company__backdrop).visible::after{animation-duration:1.8s}
+  :is(.process__image,.company__backdrop) img{transition-duration:2.3s,0s;transition-delay:.7s,.85s}
+  .project-carousel.visible .project-card__main::after{animation-duration:1.75s}
+  .project-carousel.visible .project-card:nth-child(2) .project-card__main::after{animation-delay:.2s}
+  .project-carousel.visible .project-card:nth-child(3) .project-card__main::after{animation-delay:.4s}
+  .project-card__body,.project-card__index{transition-duration:1.15s;transition-delay:1s}
+  .project-page{transition-duration:.95s}
+  .project-track{transition-duration:.95s}
+  .project-card__main img{transition-duration:1.15s,.65s}
+
+  .formats__card.visible .formats__visual,
+  .formats__card.visible .formats__visual::after{animation-duration:2.6s;animation-delay:.35s}
+  .formats__card:nth-child(2).visible .formats__visual,
+  .formats__card:nth-child(2).visible .formats__visual::after{animation-delay:.65s}
+  .service-seg.reveal.visible{animation-duration:1.9s;animation-delay:calc(var(--reveal-order,0)*160ms)}
+  .service-seg__media{transition-duration:1.15s,1.15s,2.6s}
+  .principles article.visible .principle-art{animation-duration:1.6s;animation-delay:calc(var(--reveal-order,0)*160ms + .35s)}
+
+  .process .timeline article>span{transition-duration:1.15s;transition-delay:calc(var(--reveal-order,0)*170ms + .3s)}
+  .process .timeline article::before{transition-duration:1.6s;transition-delay:calc(var(--reveal-order,0)*170ms + .65s)}
+  .measure__timeline::before{transition-duration:3.1s;transition-delay:.3s}
+  .measure__step-icon{transition-duration:1.3s;transition-delay:calc(var(--reveal-order,0)*130ms + .3s)}
+  .measure__step--result.visible .measure__step-icon::after{animation-duration:2.3s;animation-delay:1.55s}
+
+  .hero__stats>div{transition-duration:1.15s,1.45s}
+  .hero__stats>div:nth-child(2){transition-delay:.18s}
+  .hero__stats>div:nth-child(3){transition-delay:.36s}
+  .reviews__track{transition-duration:.9s}
+  .reviews__track.visible blockquote{animation-duration:1.45s}
+  .reviews__track.visible blockquote:nth-child(2){animation-delay:.18s}
+  .reviews__track.visible blockquote:nth-child(3){animation-delay:.36s}
+  .reviews__track.visible blockquote:nth-child(n+4){animation-delay:.54s}
+  .review__quote{transition-duration:1.3s;transition-delay:.7s}
+  .company__copy.visible>*{animation-duration:1.45s}
+  .company__copy.visible>:nth-child(2){animation-delay:.18s}
+  .company__copy.visible>:nth-child(3){animation-delay:.36s}
+  .company__copy.visible>:nth-child(4){animation-delay:.54s}
+  .static-map-frame.visible .static-map-flag{animation-duration:1s;animation-delay:calc(var(--n,0)*100ms + .3s)}
+  .lightbox{transition-duration:.5s}
+  .lightbox figure img{transition-duration:.5s,.85s}
 }

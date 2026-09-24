@@ -120,7 +120,7 @@ const countUp = el => {
   el.style.minWidth = `${el.getBoundingClientRect().width}px`;
   const start = performance.now();
   const tick = now => {
-    const ratio = Math.min((now - start) / 1500, 1);
+    const ratio = Math.min((now - start) / 2200, 1);
     el.textContent = before + Math.round(target * (1 - Math.pow(1 - ratio, 4))) + after;
     if (ratio < 1) requestAnimationFrame(tick);
   };
@@ -319,12 +319,12 @@ updateProjects();
     started = true;
     slides[0]?.classList.add('is-active');
     slides.slice(1).forEach((slide, index) => setTimeout(() => loadBackground(slide), 700 + index * 350));
-    if (!reducedMotion) slideTimer = setInterval(advance, 11000);
+    if (!reducedMotion) slideTimer = setInterval(advance, 15000);
   };
   window.addEventListener('site:ready', start, { once: true });
   document.addEventListener('visibilitychange', () => {
     clearInterval(slideTimer);
-    if (!document.hidden && started && !reducedMotion) slideTimer = setInterval(advance, 11000);
+    if (!document.hidden && started && !reducedMotion) slideTimer = setInterval(advance, 15000);
   });
 })();
 
