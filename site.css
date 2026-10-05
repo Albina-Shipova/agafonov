@@ -857,6 +857,12 @@ button,a{-webkit-tap-highlight-color:transparent}button{font:inherit}button:focu
   .header .menu-toggle { display:grid; grid-column: 3; }
 }
 
+/* Keep the full navigation on medium desktop widths, freeing space from the city label. */
+@media (max-width: 1400px) and (min-width: 1101px) {
+  .header__location { display: none; }
+  .header__contact { gap: 0; }
+}
+
 .hero__orbit { display: none; }
 
 @media (max-width: 700px) {
