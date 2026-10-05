@@ -867,6 +867,12 @@ button,a{-webkit-tap-highlight-color:transparent}button{font:inherit}button:focu
   .header__contact { gap: 0; }
 }
 
+/* The fixed header background must cover the full viewport, including the right edge. */
+.header { right: 0; width: auto; }
+@media (min-width: 701px) {
+  .header:before { width: 100%; }
+}
+
 .hero__orbit { display: none; }
 
 @media (max-width: 700px) {
