@@ -859,12 +859,12 @@ button,a{-webkit-tap-highlight-color:transparent}button{font:inherit}button:focu
 
 /* Keep the full navigation on medium desktop widths, freeing space from the city label. */
 @media (max-width: 1400px) and (min-width: 1101px) {
-  .header { grid-template-columns: 280px minmax(0, 1fr) auto; }
-  .header .nav { grid-column: auto; grid-row: auto; }
+  .header { grid-template-columns: 240px minmax(0, 1fr) auto; gap: 12px; }
+  .header .nav { grid-column: auto; grid-row: auto; gap: clamp(12px, 1.4vw, 22px); }
+  .header .nav a { border-bottom: 0; font-size: 14px; }
   .header__contact { grid-column: auto; grid-row: auto; }
   .header .menu-toggle { display: none; }
-  .header__location { display: none; }
-  .header__contact { gap: 0; }
+  .header__contact { gap: 12px; }
 }
 
 /* The fixed header background must cover the full viewport, including the right edge. */
